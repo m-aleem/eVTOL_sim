@@ -41,7 +41,11 @@ To build this simulation project:
 After building, to run the simulation project:
 1) Run `make run`
 
+### Input
+Currently there are no required inputs.
+
 ### Output
+The output of the program is a **simulation report** which includes various statistics per vehicle type.
 
 ## Version
 Version # | Status | Description

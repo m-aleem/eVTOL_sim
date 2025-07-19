@@ -7,6 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 # Main executable
 add_executable(eVTOL_sim
     src/main.cpp
+    src/vehicle.cpp
+    src/std_rng.cpp
 )
 
 # Find installed GoogleTest package
@@ -18,10 +20,15 @@ enable_testing()
 # Test executable
 add_executable(eVTOL_tests
     tests/test_main.cpp
+    tests/test_vehicle.cpp
+    src/vehicle.cpp
+    src/std_rng.cpp
 )
 
+target_include_directories(eVTOL_tests PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
 # Link test executable with GTest libraries
-target_link_libraries(eVTOL_tests PRIVATE GTest::gtest GTest::gtest_main)
+target_link_libraries(eVTOL_tests PRIVATE GTest::gtest GTest::gmock GTest::gtest_main)
 
 # Register test with CTest
 add_test(NAME eVTOL_tests COMMAND eVTOL_tests)
