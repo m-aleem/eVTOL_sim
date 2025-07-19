@@ -1,0 +1,48 @@
+var class_vehicle =
+[
+    [ "Manufacturer", "class_vehicle.html#adfbadbefb077d5a172b102c349790439", [
+      [ "Alpha", "class_vehicle.html#adfbadbefb077d5a172b102c349790439a6132295fcf5570fb8b0a944ef322a598", null ],
+      [ "Bravo", "class_vehicle.html#adfbadbefb077d5a172b102c349790439a01a2da07bf36766155f48fc670d53fe8", null ],
+      [ "Charlie", "class_vehicle.html#adfbadbefb077d5a172b102c349790439aea2bfa79cd221f1e88a9bf39ea155cd8", null ],
+      [ "Delta", "class_vehicle.html#adfbadbefb077d5a172b102c349790439adb1f4ab5845def61a83d5df13e0c2397", null ],
+      [ "Echo", "class_vehicle.html#adfbadbefb077d5a172b102c349790439ad31ef811301c6b4111380dda959d6125", null ]
+    ] ],
+    [ "State", "class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0", [
+      [ "Ready", "class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0ae7d31fc0602fb2ede144d18cdffd816b", null ],
+      [ "Flying", "class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0a444733081a578880ba8a563d3c59d22d", null ],
+      [ "Queued", "class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0a7b2f31b90fe1c2cc33a52233c1925df3", null ],
+      [ "Charging", "class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0ad7b54fc61b65b19c4694a29b6044aacd", null ],
+      [ "Faulted", "class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0a2b310d05c23325e2935ec87b25a60b8f", null ]
+    ] ],
+    [ "Vehicle", "class_vehicle.html#ac7d743939b68f5013fc203013fbe0e9c", null ],
+    [ "~Vehicle", "class_vehicle.html#a87b19c79e53ebbdaded2a6939aabec79", null ],
+    [ "charge", "class_vehicle.html#acc47a8071ee168d707097b1a926f778d", null ],
+    [ "checkFault", "class_vehicle.html#a93fbf674d69361479256d465cb954111", null ],
+    [ "fly", "class_vehicle.html#a063c825e56c0cd279c72843e85e4c68f", null ],
+    [ "getBatteryCapacity", "class_vehicle.html#a57d41122f28e2ab5e9fd7c036dab8f92", null ],
+    [ "getBatteryLevel", "class_vehicle.html#a72839ba9c175f3721dbaa03097f851d2", null ],
+    [ "getCruiseSpeed", "class_vehicle.html#af1c7d728ead43347ec83fec29c5159a0", null ],
+    [ "getCurrentState", "class_vehicle.html#a94767972b1fdbea3292cd7887565e964", null ],
+    [ "getEnergyUsePerMile", "class_vehicle.html#a15b33bbdeb479c331c672374c40d1364", null ],
+    [ "getFaultProbability", "class_vehicle.html#a32b4de4744f759f0d291dafc5058320b", null ],
+    [ "getManufacturer", "class_vehicle.html#acb0fd47f35a5f871ad4d3f78fd218cc8", null ],
+    [ "getManufacturerString", "class_vehicle.html#a6368e8383d4edf0c02a06d7d56bc5348", null ],
+    [ "getMaxFlightTime", "class_vehicle.html#a0ac31fecb14a8f4dcc132df12ad5e177", null ],
+    [ "getPassengerCount", "class_vehicle.html#a3193d16c1c68ec68afd81544f1d96735", null ],
+    [ "getPowerConsumptionRate", "class_vehicle.html#a39ed66cdef58de2d5d8ee6874ef93a12", null ],
+    [ "getStateString", "class_vehicle.html#afbd877a72893e056a8d2abca0e9ce428", null ],
+    [ "getStatistics", "class_vehicle.html#a65327fd81660c6a7a60a524de7748813", null ],
+    [ "getStatistics", "class_vehicle.html#abe4f66a4b6ac77cc89fe0d73f30f83b1", null ],
+    [ "getTimeToCharge", "class_vehicle.html#a3a19b4b3dabf980f92ff36eac16a316b", null ],
+    [ "getTotalChargingTime", "class_vehicle.html#ac3428ecaea3815d06d4b0572e33498ee", null ],
+    [ "getTotalDistanceTraveled", "class_vehicle.html#a36c1a96d656fc678b8345b7d15347c52", null ],
+    [ "getTotalFaultedTime", "class_vehicle.html#a1ef949810f1340d2ba1a1b8444d7b282", null ],
+    [ "getTotalFaults", "class_vehicle.html#a896fc71f15e8a542aa28b285c4237ecc", null ],
+    [ "getTotalFlightTime", "class_vehicle.html#ac27d79564b4b539e7573dd868b41a4ec", null ],
+    [ "getTotalPassengerMiles", "class_vehicle.html#a040faffd93c471a6c272f3075b03eb0b", null ],
+    [ "getTotalQueuedTime", "class_vehicle.html#ad13d286be58195645c8718f9b9339c0a", null ],
+    [ "setBatteryLevel", "class_vehicle.html#ae661bb4b0b158dea3da46bc472d39594", null ],
+    [ "setCurrentState", "class_vehicle.html#a89cbaba0bf85e9167112e383f546efff", null ],
+    [ "startCharging", "class_vehicle.html#a01e15f6fd0cc13687750325f28c1622c", null ],
+    [ "updateState", "class_vehicle.html#a679d66b00c8f2e8c350acac52062f437", null ]
+];

@@ -1,0 +1,12 @@
+PROJECT_NAME           = "eVTOL Simulation"
+INPUT                  = ../src
+OUTPUT_DIRECTORY       = doxygen
+EXTRACT_ALL            = YES
+RECURSIVE              = YES
+
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+GENERATE_XML           = NO
+GENERATE_MAN           = NO
+GENERATE_RTF           = NO
+
