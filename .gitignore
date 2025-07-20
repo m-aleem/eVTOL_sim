@@ -6,6 +6,10 @@ cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 
+# Executables
+eVTOL_sim
+eVTOL_tests
+
 # Machine files
 .DS_Store
 

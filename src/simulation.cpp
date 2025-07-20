@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <algorithm>
 #include <cassert>
+#include <filesystem>
 
 /* Constructor*/
 Simulation::Simulation(
@@ -18,7 +19,11 @@ Simulation::Simulation(
       numChargers(numChargers),
       simTimeStepSeconds(simTimeStepSeconds),
       chargingStations(numChargers, nullptr) {
-        std::string filename = "eVTOL_sim_report_" + logger.getCurrentTimestamp() + ".txt";
+
+        // Create output directory if it doesn't exist
+        std::filesystem::create_directories("output");
+
+        std::string filename = "output/eVTOL_sim_report_" + logger.getCurrentTimestamp() + ".txt";
         logger.setLogFileName(filename);
 }
 
@@ -34,6 +39,10 @@ bool Simulation::runSimulation() {
     initializeVehicles();
 
     while (currentTime < simHours) {
+        // Save current logging mode and switch to file-only for detailed step output
+        Logger::LogMode originalMode = logger.getLogMode();
+        logger.setLogMode(Logger::LogMode::FILE_ONLY);
+
         logger.logSubSectionDivider("Simulation Step " + std::to_string(stepCount + 1));
         logger.logLine("Current Time: " + std::to_string(currentTime) + " hours");
 
@@ -41,16 +50,19 @@ bool Simulation::runSimulation() {
         manageCharging();
         processChargingVehicles(timeStep);
 
+        // Restore original logging mode
+        logger.setLogMode(originalMode);
+
         currentTime += timeStep;
         stepCount++;
 
-        // // Update progress every few steps to avoid excessive output
-        // if (stepCount % 5 == 0 || currentTime >= simHours) {
-        //     showProgress(currentTime, simHours);
-        // }
+        // Update progress every few steps to avoid excessive output
+        if (stepCount % 5 == 0 || currentTime >= simHours) {
+            showProgress(currentTime, simHours);
+        }
     }
-    // std::cout << std::endl; // New line after std::cout-only progress bar
 
+    logger.logLine("", false);
     printStatsTable();
     printFinalStatus();
 

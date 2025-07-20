@@ -13,12 +13,24 @@
 #include <sstream>
 
 class Logger {
+public:
+    /**
+     * @brief Enumeration for different logging output modes
+     */
+    enum class LogMode {
+        STDOUT_ONLY,  // Log to std::cout only
+        FILE_ONLY,    // Log to file only
+        BOTH          // Log to both std::cout and file (default)
+    };
+
 private:
     std::ofstream logFile;
     std::string logFileName;
+    LogMode currentMode;
+    bool includeTimestampInFile;
 
 public:
-    Logger(const std::string& filename = "");
+    Logger(const std::string& filename = "", LogMode mode = LogMode::BOTH);
     ~Logger();
 
     std::string formatTableCell(const std::string& text, int width);
@@ -28,6 +40,10 @@ public:
     void logSubSectionDivider(const std::string& message = "", bool includeTimestamp = true);
     void setLogFileName(const std::string& filename);
     std::string getLogFileName() const;
+    void setLogMode(LogMode mode);
+    LogMode getLogMode() const;
+    void setIncludeTimestampInFile(bool enable);
+    bool getIncludeTimestampInFile() const;
 
     static std::string getCurrentTimestamp() {
         auto now = std::chrono::system_clock::now();

@@ -11,15 +11,16 @@ all:
 
 # Run the main program
 run: all
-	./$(BUILD_DIR)/$(TARGET)
+	./$(TARGET)
 
 # Build and run tests
 test: all
-	cd $(BUILD_DIR) && ctest --output-on-failure
+	./$(TEST_TARGET)
 
-# Remove all build files
+# Remove all build files and executables
 clean:
 	rm -rf $(BUILD_DIR)
+	rm -f $(TARGET) $(TEST_TARGET)
 
 # Clean and rebuild
 rebuild: clean all

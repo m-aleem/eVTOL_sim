@@ -4,6 +4,9 @@ project(eVTOL_sim LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+# Set output directory for executables to the project root
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR})
+
 # Main executable
 add_executable(eVTOL_sim
     src/main.cpp
@@ -14,7 +17,6 @@ add_executable(eVTOL_sim
 )
 
 # Find installed GoogleTest package
-# find_package(GTest REQUIRED)
 include(FetchContent)
 
 FetchContent_Declare(
