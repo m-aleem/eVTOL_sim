@@ -179,11 +179,35 @@ TEST_P(VehicleParameterizedTest, InitialBatteryLevelIsFull) {
 
 TEST_P(VehicleParameterizedTest, InitialStatisticsAreZero) {
     SCOPED_TRACE("REQ-VEHICLE-5: Verifies all statistics are initialized to zero at start.");
-    EXPECT_DOUBLE_EQ(vehicle->getStatistics().totalFlightTime, 0.0);
-    EXPECT_DOUBLE_EQ(vehicle->getStatistics().totalDistanceTraveled, 0.0);
-    EXPECT_DOUBLE_EQ(vehicle->getStatistics().totalChargingTime, 0.0);
-    EXPECT_EQ(vehicle->getStatistics().totalFaults, 0);
-    EXPECT_DOUBLE_EQ(vehicle->getStatistics().totalPassengerMiles, 0.0);
+
+    // Test total stats are zero
+    const auto& totalStats = vehicle->getTotalStats();
+    EXPECT_DOUBLE_EQ(totalStats.flightTime, 0.0);
+    EXPECT_DOUBLE_EQ(totalStats.distanceTraveled, 0.0);
+    EXPECT_DOUBLE_EQ(totalStats.chargingTime, 0.0);
+    EXPECT_DOUBLE_EQ(totalStats.queuedTime, 0.0);
+    EXPECT_DOUBLE_EQ(totalStats.faultedTime, 0.0);
+    EXPECT_EQ(totalStats.faults, 0);
+    EXPECT_DOUBLE_EQ(totalStats.passengerMiles, 0.0);
+
+    // Test step stats are zero
+    const auto& stepStats = vehicle->getStepStats();
+    EXPECT_DOUBLE_EQ(stepStats.flightTime, 0.0);
+    EXPECT_DOUBLE_EQ(stepStats.distanceTraveled, 0.0);
+    EXPECT_DOUBLE_EQ(stepStats.chargingTime, 0.0);
+    EXPECT_DOUBLE_EQ(stepStats.queuedTime, 0.0);
+    EXPECT_DOUBLE_EQ(stepStats.faultedTime, 0.0);
+    EXPECT_EQ(stepStats.faults, 0);
+    EXPECT_DOUBLE_EQ(stepStats.passengerMiles, 0.0);
+
+    // Test individual getter methods (for backward compatibility)
+    EXPECT_DOUBLE_EQ(vehicle->getTotalFlightTime(), 0.0);
+    EXPECT_DOUBLE_EQ(vehicle->getTotalDistanceTraveled(), 0.0);
+    EXPECT_DOUBLE_EQ(vehicle->getTotalChargingTime(), 0.0);
+    EXPECT_DOUBLE_EQ(vehicle->getTotalQueuedTime(), 0.0);
+    EXPECT_DOUBLE_EQ(vehicle->getTotalFaultedTime(), 0.0);
+    EXPECT_EQ(vehicle->getTotalFaults(), 0);
+    EXPECT_DOUBLE_EQ(vehicle->getTotalPassengerMiles(), 0.0);
 }
 
 TEST_F(VehicleTest, ManufacturerSpecificProperties) {
@@ -340,3 +364,157 @@ TEST_P(VehicleParameterizedTestFault, ReadyToFaulted) {
 
 // TODO: Add tests for Queued and then get called to charge scenarios
 // TODO: Add tests for Charging complete then Ready and Flying scenarios
+
+TEST_P(VehicleParameterizedTest, StepAndTotalStatsAccumulation) {
+    SCOPED_TRACE("REQ-VEHICLE-5: Verifies step stats are properly accumulated into total stats.");
+
+    // Perform first update - fly for some time
+    double firstFlightTime = 0.5; // 30 minutes
+    vehicle->updateState(firstFlightTime);
+
+    // Check that step stats contain only the latest operation
+    const auto& stepStats1 = vehicle->getStepStats();
+    EXPECT_GT(stepStats1.flightTime, 0.0);
+    EXPECT_GT(stepStats1.distanceTraveled, 0.0);
+    EXPECT_GT(stepStats1.passengerMiles, 0.0);
+
+    // Check that total stats accumulated the first step
+    const auto& totalStats1 = vehicle->getTotalStats();
+    double firstFlightActual = stepStats1.flightTime;
+    double firstDistanceActual = stepStats1.distanceTraveled;
+    double firstPassengerMilesActual = stepStats1.passengerMiles;
+
+    EXPECT_DOUBLE_EQ(totalStats1.flightTime, firstFlightActual);
+    EXPECT_DOUBLE_EQ(totalStats1.distanceTraveled, firstDistanceActual);
+    EXPECT_DOUBLE_EQ(totalStats1.passengerMiles, firstPassengerMilesActual);
+
+    // Perform second update - fly some more
+    double secondFlightTime = 0.3; // 18 minutes
+    vehicle->updateState(secondFlightTime);
+
+    // Check that step stats contain only the second operation (should be reset)
+    const auto& stepStats2 = vehicle->getStepStats();
+    EXPECT_GT(stepStats2.flightTime, 0.0);
+    EXPECT_LT(stepStats2.flightTime, firstFlightActual); // Should be less than first flight
+    EXPECT_GT(stepStats2.distanceTraveled, 0.0);
+    EXPECT_GT(stepStats2.passengerMiles, 0.0);
+
+    // Check that total stats accumulated both steps
+    const auto& totalStats2 = vehicle->getTotalStats();
+    EXPECT_DOUBLE_EQ(totalStats2.flightTime, firstFlightActual + stepStats2.flightTime);
+    EXPECT_DOUBLE_EQ(totalStats2.distanceTraveled, firstDistanceActual + stepStats2.distanceTraveled);
+    EXPECT_DOUBLE_EQ(totalStats2.passengerMiles, firstPassengerMilesActual + stepStats2.passengerMiles);
+
+    // Verify step stats are isolated from total stats
+    EXPECT_NE(stepStats2.flightTime, totalStats2.flightTime);
+    EXPECT_NE(stepStats2.distanceTraveled, totalStats2.distanceTraveled);
+    EXPECT_NE(stepStats2.passengerMiles, totalStats2.passengerMiles);
+}
+
+TEST_P(VehicleParameterizedTest, StepStatsResetBetweenUpdates) {
+    SCOPED_TRACE("REQ-VEHICLE-5: Verifies step stats are reset between updateState calls.");
+
+    // Perform first flight
+    double flightTime = 0.5;
+    vehicle->updateState(flightTime);
+
+    // Capture step stats values after first update
+    double firstStepFlightTime = vehicle->getStepStats().flightTime;
+    double firstStepDistance = vehicle->getStepStats().distanceTraveled;
+    double firstStepPassengerMiles = vehicle->getStepStats().passengerMiles;
+
+    // Verify step stats have values from first update
+    EXPECT_GT(firstStepFlightTime, 0.0);
+    EXPECT_GT(firstStepDistance, 0.0);
+    EXPECT_GT(firstStepPassengerMiles, 0.0);
+
+    // Perform another update
+    vehicle->updateState(0.3);
+
+    // Check step stats after second update - should be different values (reset and recalculated)
+    double secondStepFlightTime = vehicle->getStepStats().flightTime;
+    double secondStepDistance = vehicle->getStepStats().distanceTraveled;
+    double secondStepPassengerMiles = vehicle->getStepStats().passengerMiles;
+
+    // Step stats should be reset and contain only the second update's values
+    EXPECT_GT(secondStepFlightTime, 0.0);
+    EXPECT_GT(secondStepDistance, 0.0);
+    EXPECT_GT(secondStepPassengerMiles, 0.0);
+
+    // Total stats should contain accumulated values from both updates
+    const auto& totalStats = vehicle->getTotalStats();
+    EXPECT_DOUBLE_EQ(totalStats.flightTime, firstStepFlightTime + secondStepFlightTime);
+    EXPECT_DOUBLE_EQ(totalStats.distanceTraveled, firstStepDistance + secondStepDistance);
+    EXPECT_DOUBLE_EQ(totalStats.passengerMiles, firstStepPassengerMiles + secondStepPassengerMiles);
+}
+
+// Test fixture for VehicleStats struct
+class VehicleStatsTest : public ::testing::Test {
+protected:
+    VehicleStats stats1;
+    VehicleStats stats2;
+
+    void SetUp() override {
+        // Initialize stats1 with some values
+        stats1.flightTime = 10.0;
+        stats1.queuedTime = 2.0;
+        stats1.distanceTraveled = 100.0;
+        stats1.chargingTime = 5.0;
+        stats1.faultedTime = 1.0;
+        stats1.faults = 2;
+        stats1.passengerMiles = 400.0;
+
+        // Initialize stats2 with different values
+        stats2.flightTime = 5.0;
+        stats2.queuedTime = 1.0;
+        stats2.distanceTraveled = 50.0;
+        stats2.chargingTime = 3.0;
+        stats2.faultedTime = 0.5;
+        stats2.faults = 1;
+        stats2.passengerMiles = 200.0;
+    }
+};
+
+TEST_F(VehicleStatsTest, ResetMethod) {
+    SCOPED_TRACE("Verifies VehicleStats reset() method clears all fields to zero.");
+
+    // Verify stats1 has non-zero values
+    EXPECT_GT(stats1.flightTime, 0.0);
+    EXPECT_GT(stats1.faults, 0);
+
+    // Reset and verify all fields are zero
+    stats1.reset();
+
+    EXPECT_DOUBLE_EQ(stats1.flightTime, 0.0);
+    EXPECT_DOUBLE_EQ(stats1.queuedTime, 0.0);
+    EXPECT_DOUBLE_EQ(stats1.distanceTraveled, 0.0);
+    EXPECT_DOUBLE_EQ(stats1.chargingTime, 0.0);
+    EXPECT_DOUBLE_EQ(stats1.faultedTime, 0.0);
+    EXPECT_EQ(stats1.faults, 0);
+    EXPECT_DOUBLE_EQ(stats1.passengerMiles, 0.0);
+}
+
+TEST_F(VehicleStatsTest, AddMethod) {
+    SCOPED_TRACE("Verifies VehicleStats add() method correctly accumulates values.");
+
+    // Save original values
+    double originalFlightTime = stats1.flightTime;
+    double originalDistance = stats1.distanceTraveled;
+    int originalFaults = stats1.faults;
+
+    // Add stats2 to stats1
+    stats1.add(stats2);
+
+    // Verify accumulation
+    EXPECT_DOUBLE_EQ(stats1.flightTime, originalFlightTime + stats2.flightTime);
+    EXPECT_DOUBLE_EQ(stats1.queuedTime, 2.0 + 1.0);
+    EXPECT_DOUBLE_EQ(stats1.distanceTraveled, originalDistance + stats2.distanceTraveled);
+    EXPECT_DOUBLE_EQ(stats1.chargingTime, 5.0 + 3.0);
+    EXPECT_DOUBLE_EQ(stats1.faultedTime, 1.0 + 0.5);
+    EXPECT_EQ(stats1.faults, originalFaults + stats2.faults);
+    EXPECT_DOUBLE_EQ(stats1.passengerMiles, 400.0 + 200.0);
+
+    // Verify stats2 is unchanged
+    EXPECT_DOUBLE_EQ(stats2.flightTime, 5.0);
+    EXPECT_EQ(stats2.faults, 1);
+}

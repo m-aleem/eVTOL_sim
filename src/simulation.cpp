@@ -78,7 +78,7 @@ void Simulation::updateAllVehicles(double timeStep) {
 
 void Simulation::updateVehicleStats(Vehicle* vehicle) {
     const Vehicle::Manufacturer manufacturer = vehicle->getManufacturer();
-    const auto& stats = vehicle->getStatistics();
+    const auto& stepStats = vehicle->getStepStats();
 
     // Track flight and charge counts for averages
     static std::map<Vehicle*, Vehicle::State> lastState;
@@ -101,27 +101,19 @@ void Simulation::updateVehicleStats(Vehicle* vehicle) {
 
     // Update type statistics
     auto& typeData = typeStats[manufacturer];
-    const auto& vStats = vehicle->getStatistics();
 
-    typeData.totalFlightTime += vStats.lastUpdateFlightTime;
-    typeData.totalDistance += vStats.lastUpdateDistanceTraveled;
-    typeData.totalChargingTime += vStats.lastUpdateChargingTime;
-    typeData.totalFaults += vStats.lastUpdateFaults;
-    typeData.totalPassengerMiles += vStats.lastUpdatePassengerMiles;
+    typeData.totalFlightTime += stepStats.flightTime;
+    typeData.totalDistance += stepStats.distanceTraveled;
+    typeData.totalChargingTime += stepStats.chargingTime;
+    typeData.totalFaults += stepStats.faults;
+    typeData.totalPassengerMiles += stepStats.passengerMiles;
 
     lastState[vehicle] = currentState;
-
-    // // FIXME DEBUG
-    // std::cout << "Iterate thru every vehicle: " << std::endl;
-    // if (manufacturer == Vehicle::Manufacturer::Echo) {
-    //     std::cout << vStats.toString() << std::endl;
-    //     std::cout << typeStats[Vehicle::Manufacturer::Echo].toString() << std::endl;
-    // }
 
     logger.logLine(logger.formatFixedWidth("Vehicle " + std::to_string(vehicle->getId()) + " (" + vehicle->getManufacturerString() + ")   ", 30) +
                    "[" + logger.formatFixedWidth(vehicle->getStateString(), 8) + "]   " +
                    "[" + logger.formatFixedWidth(std::to_string(vehicle->getBatteryLevel()), 12) + "]   " +
-                   vStats.lastUpdatesToString());
+                   stepStats.toString());
 }
 
 void Simulation::manageCharging() {

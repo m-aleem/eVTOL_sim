@@ -36,8 +36,8 @@ Vehicle::Vehicle(Manufacturer manufacturer,
       currentState(State::Ready), // Always start Ready
       batteryLevel(batteryCapacity),
       rng(rng) {
-        stats.resetTotals();
-        stats.resetStep();
+        stepStats.reset();
+        totalStats.reset();
         id = nextId++;
 }
 
@@ -71,7 +71,7 @@ void Vehicle::updateState(double hours) {
 
     while (continueProcessing && remainingTime >= 0) {
         continueProcessing = false;
-        stats.resetStep(); // Reset step statistics for this update
+        stepStats.reset(); // Reset step statistics for this update
 
         switch (currentState) {
             case State::Ready:
@@ -93,14 +93,13 @@ void Vehicle::updateState(double hours) {
                         // Could potentially auto-start charging here if simulation allows
                         // For now, just consume remaining time waiting in queue
                         // Update queued time in statistics
-                        stats.totalQueuedTime += remainingTime;
-                        stats.lastUpdateQueuedTime += remainingTime;
+                        stepStats.queuedTime += remainingTime;
                         remainingTime = 0;
                     }
                     // If we faulted, remaining time is lost (vehicle grounded)
                     else if (currentState == State::Faulted) {
-                        stats.totalFaultedTime += remainingTime; // Update faulted time in statistics
-                        stats.lastUpdateFaultedTime += remainingTime;
+                        // Update faulted time in statistics
+                        stepStats.faultedTime += remainingTime;
                         remainingTime = 0;
                     }
                 }
@@ -129,16 +128,15 @@ void Vehicle::updateState(double hours) {
             case State::Queued:
                 // Time-consuming action: wait (consume time but do nothing)
                 if (remainingTime > 0) {
-                    stats.totalQueuedTime += remainingTime; // Update queued time in statistics
-                    stats.lastUpdateQueuedTime += remainingTime;
+                    // Update queued time in statistics
+                    stepStats.queuedTime += remainingTime;
                     remainingTime = 0; // Time consumed waiting
                 }
                 break;
 
             case State::Faulted:
                 // Time-consuming action: stay faulted (consume time but do nothing)
-                stats.totalFaultedTime += remainingTime; // Update faulted time in statistics
-                stats.lastUpdateQueuedTime += remainingTime;
+                stepStats.faultedTime += remainingTime;
                 setCurrentState(State::Faulted); // Remain in Faulted state
                 continueProcessing = false; // No further processing needed
                 // This could be extended to allow manual repairs or retries in a more complex simulation
@@ -146,6 +144,9 @@ void Vehicle::updateState(double hours) {
                 break;
         }
     }
+
+    // Accumulate step stats into total stats
+    totalStats.add(stepStats);
 }
 
 double Vehicle::fly(double hours) {
@@ -187,17 +188,13 @@ double Vehicle::fly(double hours) {
 
     // Update battery and statistics
     setBatteryLevel(batteryLevel - energyConsumed);
-    stats.totalFlightTime += flightTimeBeforeFault;
-    stats.lastUpdateFlightTime += flightTimeBeforeFault;
-    stats.totalDistanceTraveled += distanceFlown;
-    stats.lastUpdateDistanceTraveled += distanceFlown;
-    stats.totalPassengerMiles += passengerMiles;
-    stats.lastUpdatePassengerMiles += passengerMiles;
+    stepStats.flightTime += flightTimeBeforeFault;
+    stepStats.distanceTraveled += distanceFlown;
+    stepStats.passengerMiles += passengerMiles;
 
     // Handle state transitions
     if (faultOccurred) {
-        stats.totalFaults++;
-        stats.lastUpdateFaults++;
+        stepStats.faults++;
         setCurrentState(State::Faulted);
         return flightTimeBeforeFault;
     }
@@ -214,10 +211,9 @@ double Vehicle::fly(double hours) {
 
 bool Vehicle::checkFault(double hours) {
     // Use the random number generator to determine if a fault occurs
-    // This simulates a Bernoulli trial where the probability of a fault occurring is proportional
+    // This simulates the probability of a fault occurring that is proportional
     // to the fault probability and the duration of the flight.
-    // If a fault occurs, the vehicle will transition to the Faulted state
-    // https://en.cppreference.com/w/cpp/numeric/random/bernoulli_distribution.html
+    // If a fault occurs, the vehicle will transition to the Faulted state.
     return rng.bernoulli(faultProbability * hours);
 }
 
@@ -247,8 +243,7 @@ double Vehicle::charge(double hours) {
     double timeActuallyUsed = actualEnergyToAdd / chargeRate;
 
     setBatteryLevel(batteryLevel + actualEnergyToAdd);
-    stats.totalChargingTime += timeActuallyUsed;
-    stats.lastUpdateChargingTime += timeActuallyUsed;
+    stepStats.chargingTime += timeActuallyUsed;
 
     // Check if fully charged and transition to Ready
     if (batteryLevel >= batteryCapacity) {

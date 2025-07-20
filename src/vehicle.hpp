@@ -21,83 +21,44 @@ const double EPSILON = 1e-10; // epsilon for floating point comparisons to 0
 /**
  * @brief Statistics structure to hold vehicle metrics.
  */
-struct VehicleStatistics {
-    double totalFlightTime = 0.0;
-    double totalQueuedTime = 0.0;
-    double totalDistanceTraveled = 0.0;
-    double totalChargingTime = 0.0;
-    double totalFaultedTime = 0.0;
-    int totalFaults = 0;
-    double totalPassengerMiles = 0.0;
+struct VehicleStats {
+    double flightTime = 0.0;
+    double queuedTime = 0.0;
+    double distanceTraveled = 0.0;
+    double chargingTime = 0.0;
+    double faultedTime = 0.0;
+    int faults = 0;
+    double passengerMiles = 0.0;
 
-    double lastUpdateFlightTime = 0;
-    double lastUpdateQueuedTime = 0;
-    double lastUpdateDistanceTraveled = 0.0;
-    double lastUpdateChargingTime = 0;
-    double lastUpdateFaultedTime = 0;
-    int lastUpdateFaults = 0;
-    double lastUpdatePassengerMiles = 0;
-
-    void resetTotals() {
-        totalFlightTime = 0.0;
-        totalDistanceTraveled = 0.0;
-        totalChargingTime = 0.0;
-        totalChargingTime = 0.0;
-        totalFaultedTime = 0.0;
-        totalFaults = 0;
-        totalPassengerMiles = 0.0;
+    void reset() {
+        flightTime = 0.0;
+        queuedTime = 0.0;
+        distanceTraveled = 0.0;
+        chargingTime = 0.0;
+        faultedTime = 0.0;
+        faults = 0;
+        passengerMiles = 0.0;
     }
 
-    void resetStep() {
-        lastUpdateFlightTime = 0.0;
-        lastUpdateDistanceTraveled = 0.0;
-        lastUpdateDistanceTraveled = 0.0;
-        lastUpdateChargingTime = 0.0;
-        lastUpdateFaultedTime = 0.0;
-        lastUpdateFaults = 0;
-        lastUpdatePassengerMiles = 0.0;
+    void add(const VehicleStats& other) {
+        flightTime += other.flightTime;
+        queuedTime += other.queuedTime;
+        distanceTraveled += other.distanceTraveled;
+        chargingTime += other.chargingTime;
+        faultedTime += other.faultedTime;
+        faults += other.faults;
+        passengerMiles += other.passengerMiles;
     }
 
     std::string toString() const {
-        return (" (Total)  Flight Time: " + std::to_string(totalFlightTime) +
-               ", Queued Time: " + std::to_string(totalQueuedTime) +
-               ", Distance: " + std::to_string(totalDistanceTraveled) +
-               ", Charging Time: " + std::to_string(totalChargingTime) +
-               ", Faulted Time: " + std::to_string(totalFaultedTime) +
-               ", Faults: " + std::to_string(totalFaults) +
-               ", Passenger Miles: " + std::to_string(totalPassengerMiles) +
-               "\n (Last)   Flight Time: " + std::to_string(lastUpdateFlightTime) +
-               ", Queued Time: " + std::to_string(lastUpdateQueuedTime) +
-               ", Distance: " + std::to_string(lastUpdateDistanceTraveled) +
-               ", Charging Time: " + std::to_string(lastUpdateChargingTime) +
-               ", Faulted Time: " + std::to_string(lastUpdateFaultedTime) +
-               ", Faults: " + std::to_string(lastUpdateFaults) +
-               ", Passenger Miles: " + std::to_string(lastUpdatePassengerMiles));
+        return ("Flight Time: " + std::to_string(flightTime) +
+               ", Queued Time: " + std::to_string(queuedTime) +
+               ", Distance: " + std::to_string(distanceTraveled) +
+               ", Charging Time: " + std::to_string(chargingTime) +
+               ", Faulted Time: " + std::to_string(faultedTime) +
+               ", Faults: " + std::to_string(faults) +
+               ", Passenger Miles: " + std::to_string(passengerMiles));
     }
-
-
-    std::string totalsToString() const {
-        return ("Flight Time: " + std::to_string(totalFlightTime) +
-               ", Queued Time: " + std::to_string(totalQueuedTime) +
-               ", Distance: " + std::to_string(totalDistanceTraveled) +
-               ", Charging Time: " + std::to_string(totalChargingTime) +
-               ", Faulted Time: " + std::to_string(totalFaultedTime) +
-               ", Faults: " + std::to_string(totalFaults) +
-               ", Passenger Miles: " + std::to_string(totalPassengerMiles));
-    }
-
-
-    std::string lastUpdatesToString() const {
-        return ("Flight Time: " + std::to_string(lastUpdateFlightTime) +
-               ", Queued Time: " + std::to_string(lastUpdateQueuedTime) +
-               ", Distance: " + std::to_string(lastUpdateDistanceTraveled) +
-               ", Charging Time: " + std::to_string(lastUpdateChargingTime) +
-               ", Faulted Time: " + std::to_string(lastUpdateFaultedTime) +
-               ", Faults: " + std::to_string(lastUpdateFaults) +
-               ", Passenger Miles: " + std::to_string(lastUpdatePassengerMiles));
-    }
-
-
 };
 
 /**
@@ -155,17 +116,19 @@ public:
     void setBatteryLevel(double level);
 
     // Statistics getters
-    const VehicleStatistics& getStatistics() const { return stats; }
-    VehicleStatistics& getStatistics() { return stats; }
+    const VehicleStats& getStepStats() const { return stepStats; }
+    VehicleStats& getStepStats() { return stepStats; }
+    const VehicleStats& getTotalStats() const { return totalStats; }
+    VehicleStats& getTotalStats() { return totalStats; }
 
     // Individual statistics getters
-    double getTotalFlightTime() const { return stats.totalFlightTime; }
-    double getTotalDistanceTraveled() const { return stats.totalDistanceTraveled; }
-    double getTotalQueuedTime() const { return stats.totalQueuedTime; }
-    double getTotalChargingTime() const { return stats.totalChargingTime; }
-    double getTotalFaultedTime() const { return stats.totalFaultedTime; }
-    int getTotalFaults() const { return stats.totalFaults; }
-    double getTotalPassengerMiles() const { return stats.totalPassengerMiles; }
+    double getTotalFlightTime() const { return totalStats.flightTime; }
+    double getTotalQueuedTime() const { return totalStats.queuedTime; }
+    double getTotalDistanceTraveled() const { return totalStats.distanceTraveled; }
+    double getTotalChargingTime() const { return totalStats.chargingTime; }
+    double getTotalFaultedTime() const { return totalStats.faultedTime; }
+    int getTotalFaults() const { return totalStats.faults; }
+    double getTotalPassengerMiles() const { return totalStats.passengerMiles; }
 
     // State machine transitions and helpers
     /**
@@ -267,7 +230,8 @@ private:
     State currentState;
     double batteryLevel;          // current battery level in kWh
 
-    VehicleStatistics stats;      // statistics for the vehicle
+    VehicleStats stepStats;       // statistics for the current step
+    VehicleStats totalStats;      // statistics for the total simulation
 };
 
 // Derived classes for each manufacturer
