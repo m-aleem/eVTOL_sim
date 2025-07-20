@@ -28,6 +28,8 @@ FetchContent_Declare(
 set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
+# Main executable needs Google Test headers for gtest_prod.h in simulation.hpp
+target_link_libraries(eVTOL_sim PRIVATE GTest::gtest)
 
 # Enable testing support
 enable_testing()
@@ -36,6 +38,7 @@ enable_testing()
 add_executable(eVTOL_tests
     tests/test_main.cpp
     tests/test_vehicle.cpp
+    tests/test_simulation.cpp
     src/vehicle.cpp
     src/std_rng.cpp
     src/simulation.cpp

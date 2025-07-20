@@ -10,13 +10,14 @@
 #ifndef SIMULATION_HPP
 #define SIMULATION_HPP
 
-// #include <string>
-// #include <memory>
+
 #include <vector>
 #include <queue>
 #include <map>
 #include "vehicle.hpp"
 #include "logger.hpp"
+
+#include <gtest/gtest_prod.h>
 
 const int DEFAULT_NUM_VEHICLES = 20; // Default number of vehicles to create
 const int DEFAULT_HRS_SIM = 3; // Default hours for simulation
@@ -90,7 +91,14 @@ public:
 
     ~Simulation() = default;
 
-    bool runSimulation();
+    bool runSimulation(); // Main simulation loop
+
+    // Allow access to private members for testing
+    friend class SimulationTest;
+    FRIEND_TEST(SimulationTest, Initialization);
+    FRIEND_TEST(SimulationTest, CreateVehicles);
+    FRIEND_TEST(SimulationTest, TimeStep);
+    FRIEND_TEST(SimulationTest, ChargingQueue);
 
 private:
     // Configuration
@@ -114,7 +122,6 @@ private:
     std::map<Vehicle::Manufacturer, VehicleTypeStats> typeStats;
 
     // Helper methods
-    void printInitialStatus();
     std::unique_ptr<Vehicle> createVehicle(int type);
     void initializeVehicles();
     void updateVehicleStats(Vehicle* vehicle);
@@ -122,12 +129,17 @@ private:
     void assignAvailableChargers();
     void processChargingVehicles(double timeStep);
     void updateAllVehicles(double timeStep);
+    double nextTimeStep() const;
+
+
     void showProgress(double currentTime, double totalTime);
+
+    void printInitialStatus();
+    void printChargingQueue();
+    void printChargingStations();
     void printFinalStatus();
     void printStatsTable();
 
-    void printChargingQueue();
-    void printChargingStations();
 };
 
 #endif

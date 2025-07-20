@@ -33,7 +33,7 @@ bool Simulation::runSimulation() {
 
     currentTime = 0.0;
     stepCount = 0;
-    timeStep = std::min(simTimeStepSeconds * SECONDS_TO_HOURS, simHours - currentTime);
+    timeStep = nextTimeStep();
 
     printInitialStatus();
     initializeVehicles();
@@ -344,4 +344,8 @@ void Simulation::printChargingStations() {
         }
     }
     logger.logLine("", false);
+}
+
+double Simulation::nextTimeStep() const {
+    return std::min(simTimeStepSeconds * SECONDS_TO_HOURS, simHours - currentTime);
 }
