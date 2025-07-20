@@ -59,6 +59,97 @@ struct VehicleStats {
                ", Faults: " + std::to_string(faults) +
                ", Passenger Miles: " + std::to_string(passengerMiles));
     }
+
+    std::string toShortString() const {
+        std::vector<std::string> parts;
+
+        if (flightTime > EPSILON) {
+            char buffer[40];
+            snprintf(buffer, sizeof(buffer), "Flew      %.6fh", flightTime);
+            parts.push_back(std::string(buffer));
+        }
+        if (distanceTraveled > EPSILON) {
+            char buffer[40];
+            snprintf(buffer, sizeof(buffer), "Distance  %.3fmi", distanceTraveled);
+            parts.push_back(std::string(buffer));
+        }
+        if (chargingTime > EPSILON) {
+            char buffer[40];
+            snprintf(buffer, sizeof(buffer), "Charged   %.3fh", chargingTime);
+            parts.push_back(std::string(buffer));
+        }
+        if (queuedTime > EPSILON) {
+            char buffer[40];
+            snprintf(buffer, sizeof(buffer), "Queued    %.3fh", queuedTime);
+            parts.push_back(std::string(buffer));
+        }
+        if (faultedTime > EPSILON) {
+            char buffer[40];
+            snprintf(buffer, sizeof(buffer), "Faulted   %.3fh", faultedTime);
+            parts.push_back(std::string(buffer));
+        }
+
+        if (parts.empty()) {
+            return "";
+        }
+
+        // Join parts
+        std::string result;
+        for (size_t i = 0; i < parts.size(); ++i) {
+            if (i > 0) result += " ";
+            result += parts[i];
+        }
+
+        return result;
+    }
+
+    std::string toLongString() const {
+        std::vector<std::string> parts;
+
+        char buffer[50];
+        snprintf(buffer, sizeof(buffer), "Flew      %8.3fh", flightTime);
+        parts.push_back(std::string(buffer));
+
+        snprintf(buffer, sizeof(buffer), "Distance  %8.1fmi", distanceTraveled);
+        parts.push_back(std::string(buffer));
+
+        snprintf(buffer, sizeof(buffer), "Charged   %8.3fh", chargingTime);
+        parts.push_back(std::string(buffer));
+
+        snprintf(buffer, sizeof(buffer), "Queued    %8.3fh", queuedTime);
+        parts.push_back(std::string(buffer));
+
+        snprintf(buffer, sizeof(buffer), "Faulted   %8.3fh", faultedTime);
+        parts.push_back(std::string(buffer));
+
+        snprintf(buffer, sizeof(buffer), "Faults    %8d", faults);
+        parts.push_back(std::string(buffer));
+
+        snprintf(buffer, sizeof(buffer), "PAX Miles %8.1fmi", passengerMiles);
+        parts.push_back(std::string(buffer));
+
+        // Join parts
+        std::string result;
+        for (size_t i = 0; i < parts.size(); ++i) {
+            if (i > 0) result += " ";
+            result += parts[i];
+        }
+
+        return result;
+
+        // // Show all values for totals with aligned labels (10 chars each)
+        // char buffer[300];
+        // snprintf(buffer, sizeof(buffer),
+        //          "Flew      %.3fh  Distance  %.3fmi  Charged   %.3fh  Queued    %.3fh  Faulted   %.3fh  Faults    %d  PAX Miles :%2fmi",
+        //          flightTime,                             // Flight hours
+        //          distanceTraveled,                       // Distance miles
+        //          chargingTime,                           // Charging hours
+        //          queuedTime,                             // Queue hours
+        //          faultedTime,                            // Faulted hours
+        //          faults,                                 // Fault count
+        //          passengerMiles);      // Passenger miles
+        // return std::string(buffer);
+    }
 };
 
 /**
@@ -208,6 +299,10 @@ public:
     double getMaxFlightTime() const {
         // [kWh] / ([kWh/mile] * [mile/hour]) = [hours]
         return (batteryLevel / (energyUsePerMile * cruiseSpeed));
+    }
+
+    double getBatteryPercent() const {
+        return (batteryLevel / batteryCapacity) * 100.0;
     }
 
     // Utility methods

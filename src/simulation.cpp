@@ -8,6 +8,7 @@
 #include <cassert>
 #include <filesystem>
 
+
 /* Constructor*/
 Simulation::Simulation(
         int numVehicles,
@@ -44,7 +45,7 @@ bool Simulation::runSimulation() {
         logger.setLogMode(Logger::LogMode::FILE_ONLY);
 
         logger.logSubSectionDivider("Simulation Step " + std::to_string(stepCount + 1));
-        logger.logLine("Current Time: " + std::to_string(currentTime) + " hours");
+        logger.logLine("Current Time: " + std::to_string(currentTime) + " hours (Delta +" + std::to_string(timeStep) + " hours from previous step)");
 
         updateAllVehicles(timeStep);
         manageCharging();
@@ -55,6 +56,7 @@ bool Simulation::runSimulation() {
 
         currentTime += timeStep;
         stepCount++;
+        timeStep = nextTimeStep();
 
         // Update progress every few steps to avoid excessive output
         if (stepCount % 5 == 0 || currentTime >= simHours) {
@@ -79,6 +81,7 @@ void Simulation::updateAllVehicles(double timeStep) {
 void Simulation::updateVehicleStats(Vehicle* vehicle) {
     const Vehicle::Manufacturer manufacturer = vehicle->getManufacturer();
     const auto& stepStats = vehicle->getStepStats();
+    const auto& totalStats = vehicle->getTotalStats();
 
     // Track flight and charge counts for averages
     static std::map<Vehicle*, Vehicle::State> lastState;
@@ -110,50 +113,59 @@ void Simulation::updateVehicleStats(Vehicle* vehicle) {
 
     lastState[vehicle] = currentState;
 
+
+    // Print
+    int batteryPercent = static_cast<int>(vehicle->getBatteryPercent() + 0.5);
+    std::string batteryDisplay = "Battery " + std::to_string(batteryPercent) + "%";
+    std::string stepSection = stepStats.toShortString();
+    std::string totalSection = totalStats.toLongString();
+
+    const int stepWidth = 40;
+    const int totalWidth = 140;
+
+    stepSection.resize(stepWidth, ' ');   // Pad with spaces
+    totalSection.resize(totalWidth, ' '); // Pad with spaces
+
     logger.logLine(logger.formatFixedWidth("Vehicle " + std::to_string(vehicle->getId()) + " (" + vehicle->getManufacturerString() + ")   ", 30) +
                    "[" + logger.formatFixedWidth(vehicle->getStateString(), 8) + "]   " +
-                   "[" + logger.formatFixedWidth(std::to_string(vehicle->getBatteryLevel()), 12) + "]   " +
-                   stepStats.toString());
+                   "[" + logger.formatFixedWidth(batteryDisplay, 12) + "]   " +
+                   "Step: " + stepSection + " | Total: " + totalSection);
 }
 
 void Simulation::manageCharging() {
 
-    // Add vehicles that need charging to queue
     logger.logLine();
-    printChargingQueue();
     logger.logLine("Manage Charging Queue");
+
+    // Add vehicles that need charging to queue
     for (const auto& vehicle : vehicles) {
         if (vehicle->getCurrentState() == Vehicle::State::Queued) {
-            // Check if already in queue
-            bool alreadyQueued = false;
-            std::queue<Vehicle*> tempQueue = chargingQueue;
-            while (!tempQueue.empty()) {
-                if (tempQueue.front() == vehicle.get()) {
-                    alreadyQueued = true;
-                    break;
-                }
-                tempQueue.pop();
-            }
-
-            if (!alreadyQueued) {
+            // If a vehicle is in queued state add it
+            // to the charging queue if it is not already in the queue
+            if (queuedVehicles.find(vehicle.get()) == queuedVehicles.end()) {
                 chargingQueue.push(vehicle.get());
+                queuedVehicles.insert(vehicle.get());
             }
         }
     }
+
     printChargingQueue();
     logger.logLine();
+
     assignAvailableChargers();
 }
 
 void Simulation::assignAvailableChargers() {
+
     logger.logLine();
-    printChargingStations();
     logger.logLine("Assign Available Chargers");
+
     // Assign available chargers to queued vehicles
     for (int i = 0; i < numChargers && !chargingQueue.empty(); i++) {
         if (chargingStations[i] == nullptr) {
             Vehicle* vehicle = chargingQueue.front();
             chargingQueue.pop();
+            queuedVehicles.erase(vehicle);
 
             if (vehicle->getCurrentState() == Vehicle::State::Queued) {
                 chargingStations[i] = vehicle;
@@ -202,7 +214,6 @@ void Simulation::initializeVehicles() {
 
     // Generate vehicles
     for(int i = 0; i < numVehicles; ++i) {
-        std::srand(time(0));
         int type = rng.uniformInt(0, NUM_VEHICLE_TYPES - 1); // Randomly select vehicle type
         auto vehicle = createVehicle(type);
         if (vehicle) {
@@ -270,7 +281,6 @@ void Simulation::printStatsTable() {
     logger.logLine();
     logger.logSectionDivider("Simulation Results by Vehicle Type", true);
 
-
     // Table header
     const int colWidth = 12;
     std::string separator(32 + 6*colWidth, '-');
@@ -281,7 +291,7 @@ void Simulation::printStatsTable() {
     logger.log(logger.formatFixedWidth("Avg Flight",         colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("Avg Dist",           colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("Avg Charge",         colWidth) + " | ", false);
-    logger.log(logger.formatFixedWidth("Total Faults",       colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Faults",             colWidth) + " | ", false);
     logger.logLine(logger.formatFixedWidth("PAX Miles",      colWidth) + " | ", false);
 
     logger.log(logger.formatFixedWidth("Type",               colWidth) + " | ");
@@ -289,7 +299,7 @@ void Simulation::printStatsTable() {
     logger.log(logger.formatFixedWidth("Time (hrs)",         colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("(miles)",            colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("Time (hrs)",         colWidth) + " | ", false);
-    logger.log(logger.formatFixedWidth("",                   colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("(Count %)",          colWidth) + " | ", false);
     logger.logLine(logger.formatFixedWidth("(miles)",        colWidth) + " | ", false);
 
     logger.logLine(separator);
@@ -297,12 +307,25 @@ void Simulation::printStatsTable() {
     // Per-Type data
     for (const auto& pair : typeStats) {
         const auto& stats = pair.second;
+
+        // Format fault count and rate as "Count (Rate%)"
+        double faultRatePercent = stats.getFaultRate() * 100.0;
+        std::string faultRateStr = std::to_string(faultRatePercent);
+
+        // Trim to 1 decimal place for cleaner display
+        size_t dotPos = faultRateStr.find('.');
+        if (dotPos != std::string::npos && dotPos + 2 < faultRateStr.length()) {
+            faultRateStr = faultRateStr.substr(0, dotPos + 2);
+        }
+
+        std::string faultDisplay = std::to_string(stats.totalFaults) + " (" + faultRateStr + "%)";
+
         logger.log(logger.formatFixedWidth(stats.manufacturerName,                           colWidth) +  " | ");
         logger.log(logger.formatFixedWidth(std::to_string(stats.vehicleCount),               colWidth) +  " | ", false);
         logger.log(logger.formatFixedWidth(std::to_string(stats.avgFlightTimePerFlight()),   colWidth) +  " | ", false);
         logger.log(logger.formatFixedWidth(std::to_string(stats.avgDistancePerFlight()),     colWidth) +  " | ", false);
         logger.log(logger.formatFixedWidth(std::to_string(stats.avgChargingTimePerSession()),colWidth) +  " | ", false);
-        logger.log(logger.formatFixedWidth(std::to_string(stats.totalFaults) + "(" + std::to_string(stats.getFaultRate()) + ")",                colWidth) +  " | ", false);
+        logger.log(logger.formatFixedWidth(faultDisplay,                                     colWidth) +  " | ", false);
         logger.logLine(logger.formatFixedWidth(std::to_string(stats.totalPassengerMiles),    colWidth) +  " | ", false);
     }
     logger.logLine(separator);
@@ -324,25 +347,41 @@ void Simulation::printFinalStatus() {
 }
 
 void Simulation::printChargingQueue() {
-    logger.log("Charging Queue:");
+    logger.log("Charging Queue: [");
+
     std::queue<Vehicle*> tempQueue = chargingQueue;
+    bool first = true;
+
     while (!tempQueue.empty()) {
+        if (!first) {
+            logger.log(", ", false);
+        }
         Vehicle* vehicle = tempQueue.front();
         tempQueue.pop();
-        logger.log("  Vehicle " + std::to_string(vehicle->getId()), false);
+        logger.log("Vehicle " + std::to_string(vehicle->getId()), false);
+        first = false;
     }
-    logger.logLine("", false);
+
+    logger.logLine("]", false);
 }
 
 void Simulation::printChargingStations() {
-    logger.log("Charging Stations:");
+    logger.log("Charging Stations: ");
+
     for (int i = 0; i < numChargers; i++) {
+        std::string stationLabel = "S" + std::to_string(i) + ":";
+
         if (chargingStations[i] == nullptr) {
-            logger.log("  Charger " + std::to_string(i) + ": Available", false);
+            logger.log(stationLabel + "[--]", false);
         } else {
-            logger.log("  Charger " + std::to_string(i) + ": Vehicle " + std::to_string(chargingStations[i]->getId()), false);
+            logger.log(stationLabel + "[Vehicle " + std::to_string(chargingStations[i]->getId()) + "]", false);
+        }
+
+        if (i < numChargers - 1) {
+            logger.log(" ", false);
         }
     }
+
     logger.logLine("", false);
 }
 

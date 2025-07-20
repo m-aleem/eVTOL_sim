@@ -14,6 +14,8 @@
 #include <vector>
 #include <queue>
 #include <map>
+#include <unordered_set>
+
 #include "vehicle.hpp"
 #include "logger.hpp"
 
@@ -115,7 +117,10 @@ private:
     // Simulation state
     std::vector<std::unique_ptr<Vehicle>> vehicles;
     std::queue<Vehicle*> chargingQueue;
+    std::unordered_set<Vehicle*> queuedVehicles;
     std::vector<Vehicle*> chargingStations; // nullptr = available, Vehicle* = occupied
+
+    // Logging
     Logger logger;
 
     // Statistics tracking
