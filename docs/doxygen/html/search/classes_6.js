@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['stdrandomgenerator_0',['StdRandomGenerator',['../class_std_random_generator.html',1,'']]]
+  ['randomgenerator_0',['RandomGenerator',['../class_random_generator.html',1,'']]]
 ];

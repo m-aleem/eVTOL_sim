@@ -30,7 +30,15 @@ struct VehicleStatistics {
     int totalFaults = 0;
     double totalPassengerMiles = 0.0;
 
-    void reset() {
+    double lastUpdateFlightTime = 0;
+    double lastUpdateQueuedTime = 0;
+    double lastUpdateDistanceTraveled = 0.0;
+    double lastUpdateChargingTime = 0;
+    double lastUpdateFaultedTime = 0;
+    int lastUpdateFaults = 0;
+    double lastUpdatePassengerMiles = 0;
+
+    void resetTotals() {
         totalFlightTime = 0.0;
         totalDistanceTraveled = 0.0;
         totalChargingTime = 0.0;
@@ -39,15 +47,57 @@ struct VehicleStatistics {
         totalFaults = 0;
         totalPassengerMiles = 0.0;
     }
-    std::string toString() const {
-        return "Flight Time: " + std::to_string(totalFlightTime) +
-               ", Distance: " + std::to_string(totalDistanceTraveled) +
-               ", Queued Time: " + std::to_string(totalQueuedTime) +
-               ", Charging Time: " + std::to_string(totalChargingTime) +
-               ", Fault Time: " + std::to_string(totalFaultedTime) +
-               ", Faults: " + std::to_string(totalFaults) +
-               ", Passenger Miles: " + std::to_string(totalPassengerMiles);
+
+    void resetStep() {
+        lastUpdateFlightTime = 0.0;
+        lastUpdateDistanceTraveled = 0.0;
+        lastUpdateDistanceTraveled = 0.0;
+        lastUpdateChargingTime = 0.0;
+        lastUpdateFaultedTime = 0.0;
+        lastUpdateFaults = 0;
+        lastUpdatePassengerMiles = 0.0;
     }
+
+    std::string toString() const {
+        return (" (Total)  Flight Time: " + std::to_string(totalFlightTime) +
+               ", Queued Time: " + std::to_string(totalQueuedTime) +
+               ", Distance: " + std::to_string(totalDistanceTraveled) +
+               ", Charging Time: " + std::to_string(totalChargingTime) +
+               ", Faulted Time: " + std::to_string(totalFaultedTime) +
+               ", Faults: " + std::to_string(totalFaults) +
+               ", Passenger Miles: " + std::to_string(totalPassengerMiles) +
+               "\n (Last)   Flight Time: " + std::to_string(lastUpdateFlightTime) +
+               ", Queued Time: " + std::to_string(lastUpdateQueuedTime) +
+               ", Distance: " + std::to_string(lastUpdateDistanceTraveled) +
+               ", Charging Time: " + std::to_string(lastUpdateChargingTime) +
+               ", Faulted Time: " + std::to_string(lastUpdateFaultedTime) +
+               ", Faults: " + std::to_string(lastUpdateFaults) +
+               ", Passenger Miles: " + std::to_string(lastUpdatePassengerMiles));
+    }
+
+
+    std::string totalsToString() const {
+        return ("Flight Time: " + std::to_string(totalFlightTime) +
+               ", Queued Time: " + std::to_string(totalQueuedTime) +
+               ", Distance: " + std::to_string(totalDistanceTraveled) +
+               ", Charging Time: " + std::to_string(totalChargingTime) +
+               ", Faulted Time: " + std::to_string(totalFaultedTime) +
+               ", Faults: " + std::to_string(totalFaults) +
+               ", Passenger Miles: " + std::to_string(totalPassengerMiles));
+    }
+
+
+    std::string lastUpdatesToString() const {
+        return ("Flight Time: " + std::to_string(lastUpdateFlightTime) +
+               ", Queued Time: " + std::to_string(lastUpdateQueuedTime) +
+               ", Distance: " + std::to_string(lastUpdateDistanceTraveled) +
+               ", Charging Time: " + std::to_string(lastUpdateChargingTime) +
+               ", Faulted Time: " + std::to_string(lastUpdateFaultedTime) +
+               ", Faults: " + std::to_string(lastUpdateFaults) +
+               ", Passenger Miles: " + std::to_string(lastUpdatePassengerMiles));
+    }
+
+
 };
 
 /**
@@ -69,7 +119,8 @@ public:
         Bravo,
         Charlie,
         Delta,
-        Echo
+        Echo,
+        NumManufacturers // Used to determine number of vehicle types
     };
 
     // Default random number generator instance for the Vehicle class
@@ -199,8 +250,11 @@ public:
     // Utility methods
     std::string getStateString() const;
     std::string getManufacturerString() const;
+    int getId() const { return id; }
 
 private:
+    int id; // Unique ID for the vehicle instance
+    static int nextId;            // Static counter for unique IDs
     Manufacturer manufacturer;
     double cruiseSpeed;           // mph
     double batteryCapacity;       // kWh

@@ -21,8 +21,8 @@ The simulation tracks various statistics per vehicle type and outputs the result
 
 ### Dependencies
 The following are required to be able to build and run this simulation project:
-* cmake
-* googletest
+* [cmake](https://cmake.org/download/) (3.10+)
+* [googletest](https://google.github.io/googletest/)
 
 #### Installing Dependencies
 On macOS:

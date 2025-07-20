@@ -32,16 +32,16 @@ The following is a simple diagram of the Vehicle state machine, which handles bo
 ```
 Ready (Initial) → Flying (Automatic)
                    ↙            OR     ↘
-Queued (When battery depleted)          Faulted* (When fault occurs during flight)
+Queued* (When battery depleted)          Faulted* (When fault occurs during flight)
   ↓
-Charging (Manual* via startCharging())
+Charging (Manual via startCharging())
   ↓
 Ready (Automatic when fully charged)
   ↓
 Flying (Automatic - cycle repeats)
 
 * Requires manual intervention
-   Faulted → : Not yet simulated
+   Faulted → <Any>: Not yet simulated
    Queued → Charging: Simulation to transition to charging
 ```
 

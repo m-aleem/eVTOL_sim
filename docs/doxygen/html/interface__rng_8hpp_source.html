@@ -94,18 +94,19 @@ $(function(){initNavTree('interface__rng_8hpp_source.html','',''); });
 <a href="interface__rng_8hpp.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef INTERFACE_RNG_HPP</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define INTERFACE_RNG_HPP</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span> </div>
-<div class="foldopen" id="foldopen00005" data-start="{" data-end="};">
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno"><a class="line" href="class_random_generator.html">    5</a></span><span class="keyword">class </span><a class="code hl_class" href="class_random_generator.html">RandomGenerator</a> {</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="class_random_generator.html#a14dc21aba9faecbc8ef53add771dfeaa">    7</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="class_random_generator.html#a14dc21aba9faecbc8ef53add771dfeaa">~RandomGenerator</a>() = <span class="keywordflow">default</span>;</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_random_generator.html#ac19c1769541626fce1937bff3e02d675">    8</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_random_generator.html#ac19c1769541626fce1937bff3e02d675">bernoulli</a>(<span class="keywordtype">double</span> p) = 0;</div>
+<div class="foldopen" id="foldopen00004" data-start="{" data-end="};">
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno"><a class="line" href="class_random_generator.html">    4</a></span><span class="keyword">class </span><a class="code hl_class" href="class_random_generator.html">RandomGenerator</a> {</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno"><a class="line" href="class_random_generator.html#a14dc21aba9faecbc8ef53add771dfeaa">    6</a></span>    <span class="keyword">virtual</span> <a class="code hl_function" href="class_random_generator.html#a14dc21aba9faecbc8ef53add771dfeaa">~RandomGenerator</a>() = <span class="keywordflow">default</span>;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno"><a class="line" href="class_random_generator.html#ac19c1769541626fce1937bff3e02d675">    7</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <a class="code hl_function" href="class_random_generator.html#ac19c1769541626fce1937bff3e02d675">bernoulli</a>(<span class="keywordtype">double</span> p) = 0;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno"><a class="line" href="class_random_generator.html#ac006fe7555a2652cb2ac8e00bc31281f">    8</a></span>    <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code hl_function" href="class_random_generator.html#ac006fe7555a2652cb2ac8e00bc31281f">uniformInt</a>(<span class="keywordtype">int</span> min, <span class="keywordtype">int</span> max) = 0;</div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span>};</div>
 </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclass_random_generator_html"><div class="ttname"><a href="class_random_generator.html">RandomGenerator</a></div><div class="ttdef"><b>Definition</b> interface_rng.hpp:5</div></div>
+<div class="ttc" id="aclass_random_generator_html"><div class="ttname"><a href="class_random_generator.html">RandomGenerator</a></div><div class="ttdef"><b>Definition</b> interface_rng.hpp:4</div></div>
 <div class="ttc" id="aclass_random_generator_html_a14dc21aba9faecbc8ef53add771dfeaa"><div class="ttname"><a href="class_random_generator.html#a14dc21aba9faecbc8ef53add771dfeaa">RandomGenerator::~RandomGenerator</a></div><div class="ttdeci">virtual ~RandomGenerator()=default</div></div>
+<div class="ttc" id="aclass_random_generator_html_ac006fe7555a2652cb2ac8e00bc31281f"><div class="ttname"><a href="class_random_generator.html#ac006fe7555a2652cb2ac8e00bc31281f">RandomGenerator::uniformInt</a></div><div class="ttdeci">virtual int uniformInt(int min, int max)=0</div></div>
 <div class="ttc" id="aclass_random_generator_html_ac19c1769541626fce1937bff3e02d675"><div class="ttname"><a href="class_random_generator.html#ac19c1769541626fce1937bff3e02d675">RandomGenerator::bernoulli</a></div><div class="ttdeci">virtual bool bernoulli(double p)=0</div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

@@ -16,6 +16,8 @@ RandomGenerator& Vehicle::defaultRng() {
 }
 
 /* Constructor */
+int Vehicle::nextId = 1; // Initialize static ID counter
+
 Vehicle::Vehicle(Manufacturer manufacturer,
                  double cruiseSpeed,
                  double batteryCapacity,
@@ -34,8 +36,9 @@ Vehicle::Vehicle(Manufacturer manufacturer,
       currentState(State::Ready), // Always start Ready
       batteryLevel(batteryCapacity),
       rng(rng) {
-        stats.reset();
-        // updateState(0.0);
+        stats.resetTotals();
+        stats.resetStep();
+        id = nextId++;
 }
 
 /* Getters */
@@ -68,6 +71,7 @@ void Vehicle::updateState(double hours) {
 
     while (continueProcessing && remainingTime >= 0) {
         continueProcessing = false;
+        stats.resetStep(); // Reset step statistics for this update
 
         switch (currentState) {
             case State::Ready:
@@ -88,12 +92,15 @@ void Vehicle::updateState(double hours) {
                     if (currentState == State::Queued && remainingTime > 0) {
                         // Could potentially auto-start charging here if simulation allows
                         // For now, just consume remaining time waiting in queue
-                        stats.totalQueuedTime += remainingTime; // Update queued time in statistics
+                        // Update queued time in statistics
+                        stats.totalQueuedTime += remainingTime;
+                        stats.lastUpdateQueuedTime += remainingTime;
                         remainingTime = 0;
                     }
                     // If we faulted, remaining time is lost (vehicle grounded)
                     else if (currentState == State::Faulted) {
-                        stats.totalFaultedTime += timeUsed; // Update faulted time in statistics
+                        stats.totalFaultedTime += remainingTime; // Update faulted time in statistics
+                        stats.lastUpdateFaultedTime += remainingTime;
                         remainingTime = 0;
                     }
                 }
@@ -123,6 +130,7 @@ void Vehicle::updateState(double hours) {
                 // Time-consuming action: wait (consume time but do nothing)
                 if (remainingTime > 0) {
                     stats.totalQueuedTime += remainingTime; // Update queued time in statistics
+                    stats.lastUpdateQueuedTime += remainingTime;
                     remainingTime = 0; // Time consumed waiting
                 }
                 break;
@@ -130,6 +138,7 @@ void Vehicle::updateState(double hours) {
             case State::Faulted:
                 // Time-consuming action: stay faulted (consume time but do nothing)
                 stats.totalFaultedTime += remainingTime; // Update faulted time in statistics
+                stats.lastUpdateQueuedTime += remainingTime;
                 setCurrentState(State::Faulted); // Remain in Faulted state
                 continueProcessing = false; // No further processing needed
                 // This could be extended to allow manual repairs or retries in a more complex simulation
@@ -148,77 +157,59 @@ double Vehicle::fly(double hours) {
         return 0.0;
     }
 
-    // Calculate energy consumption for requested flight time
-    double distanceForFullFlight = cruiseSpeed * hours;
-    double energyNeededForFullFlight = distanceForFullFlight * energyUsePerMile;
+    // Calculate maximum flight time based on available battery
+    double maxDistance = batteryLevel / energyUsePerMile;
+    double maxFlightTime = maxDistance / cruiseSpeed;
 
-    // Check if we have enough battery for the full requested flight
-    if (energyNeededForFullFlight > batteryLevel) {
-        // Calculate how much we can actually fly with remaining battery
-        double maxDistance = batteryLevel / energyUsePerMile;
-        double actualHours = maxDistance / cruiseSpeed;
+    // Determine actual flight time (either requested time or what battery allows)
+    double actualFlightTime = std::min(hours, maxFlightTime);
 
-        if (actualHours > 0) {
-            // Check for faults during the partial flight
-            if (checkFault(actualHours)) {
-                // Fault occurred, land immediately
-                double partialHours = actualHours * 0.5; // Assume fault occurs halfway through
-                double partialDistance = cruiseSpeed * partialHours;
-                double partialEnergy = partialDistance * energyUsePerMile;
-
-                stats.totalFlightTime += partialHours;
-                stats.totalDistanceTraveled += partialDistance;
-                stats.totalPassengerMiles += partialDistance * passengerCount;
-                setBatteryLevel(std::max(0.0, batteryLevel - partialEnergy));
-                stats.totalFaults++;
-
-                setCurrentState(State::Faulted);
-                return partialHours; // Return actual time flown before fault
-            }
-
-            // Update statistics for partial flight until battery depletion
-            stats.totalFlightTime += actualHours;
-            stats.totalDistanceTraveled += maxDistance;
-            stats.totalPassengerMiles += maxDistance * passengerCount;
-        }
-
-        // Battery depleted - go to Queued for charging
+    if (actualFlightTime <= 0) {
+        // No battery left, go to Queued immediately
         setBatteryLevel(0.0);
         setCurrentState(State::Queued);
-        return actualHours; // Return actual time flown before battery depletion
+        return 0.0;
     }
 
-    // Check for faults during the requested flight time
-    if (checkFault(hours)) {
-        // Fault occurred, land immediately
-        double partialHours = hours * 0.5; // Assume fault occurs halfway through
-        double partialDistance = cruiseSpeed * partialHours;
-        double partialEnergy = partialDistance * energyUsePerMile;
+    // Check for faults based on actual flight time
+    bool faultOccurred = checkFault(actualFlightTime);
+    double flightTimeBeforeFault = actualFlightTime;
 
-        stats.totalFlightTime += partialHours;
-        stats.totalDistanceTraveled += partialDistance;
-        stats.totalPassengerMiles += partialDistance * passengerCount;
-        setBatteryLevel(batteryLevel - partialEnergy);
+    if (faultOccurred) {
+        // Assume fault occurs halfway through the flight
+        flightTimeBeforeFault = actualFlightTime * 0.5;
+    }
+
+    // Calculate flight statistics based on time flown before fault (if any)
+    double distanceFlown = cruiseSpeed * flightTimeBeforeFault;
+    double energyConsumed = distanceFlown * energyUsePerMile;
+    double passengerMiles = distanceFlown * passengerCount;
+
+    // Update battery and statistics
+    setBatteryLevel(batteryLevel - energyConsumed);
+    stats.totalFlightTime += flightTimeBeforeFault;
+    stats.lastUpdateFlightTime += flightTimeBeforeFault;
+    stats.totalDistanceTraveled += distanceFlown;
+    stats.lastUpdateDistanceTraveled += distanceFlown;
+    stats.totalPassengerMiles += passengerMiles;
+    stats.lastUpdatePassengerMiles += passengerMiles;
+
+    // Handle state transitions
+    if (faultOccurred) {
         stats.totalFaults++;
-
+        stats.lastUpdateFaults++;
         setCurrentState(State::Faulted);
-        return partialHours; // Return actual time flown before fault
+        return flightTimeBeforeFault;
     }
-
-    // Normal flight completion
-    setBatteryLevel(batteryLevel - energyNeededForFullFlight);
-    stats.totalFlightTime += hours;
-    stats.totalDistanceTraveled += distanceForFullFlight;
-    stats.totalPassengerMiles += distanceForFullFlight * passengerCount;
 
     // Check if battery is depleted after this flight
-    if (batteryLevel <= EPSILON) { // Use a small epsilon to avoid floating point issues
+    if (batteryLevel <= EPSILON) {
         setBatteryLevel(0.0);
         setCurrentState(State::Queued);
     }
-    // Otherwise, remain in Flying state for next call
+    // Otherwise, remain in Flying state
 
-    return hours; // Return full requested time
+    return actualFlightTime;
 }
 
 bool Vehicle::checkFault(double hours) {
@@ -257,6 +248,7 @@ double Vehicle::charge(double hours) {
 
     setBatteryLevel(batteryLevel + actualEnergyToAdd);
     stats.totalChargingTime += timeActuallyUsed;
+    stats.lastUpdateChargingTime += timeActuallyUsed;
 
     // Check if fully charged and transition to Ready
     if (batteryLevel >= batteryCapacity) {

@@ -5,7 +5,8 @@ var class_vehicle =
       [ "Bravo", "class_vehicle.html#adfbadbefb077d5a172b102c349790439a01a2da07bf36766155f48fc670d53fe8", null ],
       [ "Charlie", "class_vehicle.html#adfbadbefb077d5a172b102c349790439aea2bfa79cd221f1e88a9bf39ea155cd8", null ],
       [ "Delta", "class_vehicle.html#adfbadbefb077d5a172b102c349790439adb1f4ab5845def61a83d5df13e0c2397", null ],
-      [ "Echo", "class_vehicle.html#adfbadbefb077d5a172b102c349790439ad31ef811301c6b4111380dda959d6125", null ]
+      [ "Echo", "class_vehicle.html#adfbadbefb077d5a172b102c349790439ad31ef811301c6b4111380dda959d6125", null ],
+      [ "NumManufacturers", "class_vehicle.html#adfbadbefb077d5a172b102c349790439aa86bca6bd999fa4b5963d8f3fe74bc3b", null ]
     ] ],
     [ "State", "class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0", [
       [ "Ready", "class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0ae7d31fc0602fb2ede144d18cdffd816b", null ],
@@ -25,6 +26,7 @@ var class_vehicle =
     [ "getCurrentState", "class_vehicle.html#a94767972b1fdbea3292cd7887565e964", null ],
     [ "getEnergyUsePerMile", "class_vehicle.html#a15b33bbdeb479c331c672374c40d1364", null ],
     [ "getFaultProbability", "class_vehicle.html#a32b4de4744f759f0d291dafc5058320b", null ],
+    [ "getId", "class_vehicle.html#acc208e54e31926eaf2eb5d236ab64d99", null ],
     [ "getManufacturer", "class_vehicle.html#acb0fd47f35a5f871ad4d3f78fd218cc8", null ],
     [ "getManufacturerString", "class_vehicle.html#a6368e8383d4edf0c02a06d7d56bc5348", null ],
     [ "getMaxFlightTime", "class_vehicle.html#a0ac31fecb14a8f4dcc132df12ad5e177", null ],

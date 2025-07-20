@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['randomgenerator_0',['RandomGenerator',['../class_random_generator.html',1,'']]]
+  ['logger_0',['Logger',['../class_logger.html',1,'']]]
 ];

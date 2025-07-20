@@ -7,6 +7,10 @@
 class StdRandomGenerator : public RandomGenerator {
 public:
     bool bernoulli(double p) override;
+    int uniformInt(int min, int max) override;
+
+private:
+    static std::mt19937& getEngine();
 };
 
 #endif

@@ -9,10 +9,23 @@ add_executable(eVTOL_sim
     src/main.cpp
     src/vehicle.cpp
     src/std_rng.cpp
+    src/simulation.cpp
+    src/logger.cpp
 )
 
 # Find installed GoogleTest package
-find_package(GTest REQUIRED)
+# find_package(GTest REQUIRED)
+include(FetchContent)
+
+FetchContent_Declare(
+    googletest
+    URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip
+    DOWNLOAD_EXTRACT_TIMESTAMP TRUE
+)
+# Prevent GoogleTest from installing itself
+set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
+FetchContent_MakeAvailable(googletest)
+
 
 # Enable testing support
 enable_testing()
@@ -23,12 +36,14 @@ add_executable(eVTOL_tests
     tests/test_vehicle.cpp
     src/vehicle.cpp
     src/std_rng.cpp
+    src/simulation.cpp
+    src/logger.cpp
 )
 
 target_include_directories(eVTOL_tests PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 # Link test executable with GTest libraries
-target_link_libraries(eVTOL_tests PRIVATE GTest::gtest GTest::gmock GTest::gtest_main)
+target_link_libraries(eVTOL_tests PRIVATE GTest::gtest_main GTest::gmock)
 
 # Register test with CTest
 add_test(NAME eVTOL_tests COMMAND eVTOL_tests)

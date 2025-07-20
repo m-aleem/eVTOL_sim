@@ -5,8 +5,9 @@
 #include <stdexcept>
 
 class MockRandomGenerator : public RandomGenerator {
-public:
-    MOCK_METHOD(bool, bernoulli, (double p), (override));
+    public:
+        MOCK_METHOD(bool, bernoulli, (double p), (override));
+        MOCK_METHOD(int, uniformInt, (int min, int max), (override));
 };
 
 
@@ -339,8 +340,3 @@ TEST_P(VehicleParameterizedTestFault, ReadyToFaulted) {
 
 // TODO: Add tests for Queued and then get called to charge scenarios
 // TODO: Add tests for Charging complete then Ready and Flying scenarios
-//     EXPECT_NE(alpha->getBatteryCapacity(), bravo->getBatteryCapacity());
-//     EXPECT_NE(alpha->getBatteryCapacity(), charlie->getBatteryCapacity());
-//     EXPECT_NE(alpha->getBatteryCapacity(), delta->getBatteryCapacity());
-//     EXPECT_NE(alpha->getBatteryCapacity(), echo->getBatteryCapacity());
-// }
