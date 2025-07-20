@@ -2,7 +2,8 @@
 
 ## 1. Introduction
 This document describes the design of the eVTOL simulation software.
-It integrates both high-level architectural concepts and low-level details automatically generated from the source code via [Doxygen](./doxygen/index.html).
+
+This directory contains project documentation and integrates both high-level architectural concepts described in this SDD and and low-level details automatically generated from the source code via [Doxygen](./doxygen/html/index.html).
 
 ### 1.1 Purpose
 This project implements a multi-vehicle eVTOL simulation.
@@ -12,7 +13,7 @@ There are five companies developing eVTOL aircraft. The vehicles produced by eac
 The simulation tracks various statistics per vehicle type and outputs the results at the end of simulation.
 
 ### 1.2 References
-- [Doxygen](./doxygen/index.html)
+- [Doxygen](./doxygen/html/index.html)
 
 ---
 
