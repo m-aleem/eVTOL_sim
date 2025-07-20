@@ -17,10 +17,7 @@ Logger::Logger(const std::string& filename, LogMode mode)
     // Only open file if we need to log to file
     if (currentMode == LogMode::FILE_ONLY || currentMode == LogMode::BOTH) {
         if (!filename.empty()) {
-            logFile.open(filename, std::ios::app);
-            if (!logFile.is_open()) {
-                std::cerr << "Warning: Could not open log file " << filename << std::endl;
-            }
+            openLogFile();
         }
     }
 }
@@ -31,7 +28,14 @@ Logger::~Logger() {
     }
 }
 
-void Logger::setLogFileName(const std::string& filename) {
+void Logger::openLogFile() {
+    logFile.open(logFileName, std::ios::app);
+    if (!logFile.is_open()) {
+        std::cerr << "Warning: Could not open log file " << logFileName << std::endl;
+    }
+}
+
+void Logger::setLogFile(const std::string& filename) {
     if (logFile.is_open()) {
         logFile.close();
     }
@@ -39,14 +43,11 @@ void Logger::setLogFileName(const std::string& filename) {
 
     // Only open file if we need to log to file
     if ((currentMode == LogMode::FILE_ONLY || currentMode == LogMode::BOTH) && !filename.empty()) {
-        logFile.open(logFileName, std::ios::app);
-        if (!logFile.is_open()) {
-            std::cerr << "Warning: Could not open log file " << filename << std::endl;
-        }
+        openLogFile();
     }
 }
 
-std::string Logger::getLogFileName() const {
+std::string Logger::getLogFile() const {
     return logFileName;
 }
 
@@ -66,10 +67,7 @@ void Logger::setLogMode(LogMode mode) {
                    (currentMode == LogMode::FILE_ONLY || currentMode == LogMode::BOTH)) {
             // We weren't logging to file, now we are
             if (!logFileName.empty()) {
-                logFile.open(logFileName, std::ios::app);
-                if (!logFile.is_open()) {
-                    std::cerr << "Warning: Could not open log file " << logFileName << std::endl;
-                }
+                openLogFile();
             }
         }
     }
@@ -87,9 +85,13 @@ bool Logger::getIncludeTimestampInFile() const {
     return includeTimestampInFile;
 }
 
-std::string Logger::formatTableCell(const std::string& text, int width) {
+std::string Logger::formatFixedWidth(const std::string& text, int width, bool rightAlign) {
     std::ostringstream oss;
-    oss << std::setw(width) << text;
+    if (rightAlign) {
+        oss << std::right << std::setw(width) << text;
+    } else {
+        oss << std::left << std::setw(width) << text;
+    }
     return oss.str();
 }
 

@@ -29,19 +29,27 @@ private:
     LogMode currentMode;
     bool includeTimestampInFile;
 
+    void openLogFile();
+
 public:
     Logger(const std::string& filename = "", LogMode mode = LogMode::BOTH);
     ~Logger();
 
-    std::string formatTableCell(const std::string& text, int width);
     void log(const std::string& message, bool includeTimestamp = true);
     void logLine(const std::string& message = "", bool includeTimestamp = true);
+
+
     void logSectionDivider(const std::string& message = "", bool includeTimestamp = true);
     void logSubSectionDivider(const std::string& message = "", bool includeTimestamp = true);
-    void setLogFileName(const std::string& filename);
-    std::string getLogFileName() const;
+
+    std::string formatFixedWidth(const std::string& text, int width, bool rightAlign = true);
+
+    void setLogFile(const std::string& filename);
+    std::string getLogFile() const;
+
     void setLogMode(LogMode mode);
     LogMode getLogMode() const;
+
     void setIncludeTimestampInFile(bool enable);
     bool getIncludeTimestampInFile() const;
 

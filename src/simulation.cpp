@@ -24,7 +24,7 @@ Simulation::Simulation(
         std::filesystem::create_directories("output");
 
         std::string filename = "output/eVTOL_sim_report_" + logger.getCurrentTimestamp() + ".txt";
-        logger.setLogFileName(filename);
+        logger.setLogFile(filename);
 }
 
 /* Run Simulation*/
@@ -118,9 +118,9 @@ void Simulation::updateVehicleStats(Vehicle* vehicle) {
     //     std::cout << typeStats[Vehicle::Manufacturer::Echo].toString() << std::endl;
     // }
 
-    logger.logLine(logger.formatTableCell("Vehicle " + std::to_string(vehicle->getId()) + " (" + vehicle->getManufacturerString() + ")   ", 30) +
-                   "[" + logger.formatTableCell(vehicle->getStateString(), 8) + "]   " +
-                   "[" + logger.formatTableCell(std::to_string(vehicle->getBatteryLevel()), 12) + "]   " +
+    logger.logLine(logger.formatFixedWidth("Vehicle " + std::to_string(vehicle->getId()) + " (" + vehicle->getManufacturerString() + ")   ", 30) +
+                   "[" + logger.formatFixedWidth(vehicle->getStateString(), 8) + "]   " +
+                   "[" + logger.formatFixedWidth(std::to_string(vehicle->getBatteryLevel()), 12) + "]   " +
                    vStats.lastUpdatesToString());
 }
 
@@ -284,34 +284,34 @@ void Simulation::printStatsTable() {
     std::string separator(32 + 6*colWidth, '-');
     logger.logLine();
     logger.logLine(separator);
-    logger.log(logger.formatTableCell("Vehicle",            colWidth) + " | ");
-    logger.log(logger.formatTableCell("Count",              colWidth) + " | ", false);
-    logger.log(logger.formatTableCell("Avg Flight",         colWidth) + " | ", false);
-    logger.log(logger.formatTableCell("Avg Dist",           colWidth) + " | ", false);
-    logger.log(logger.formatTableCell("Avg Charge",         colWidth) + " | ", false);
-    logger.log(logger.formatTableCell("Total Faults",       colWidth) + " | ", false);
-    logger.logLine(logger.formatTableCell("PAX Miles",      colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Vehicle",            colWidth) + " | ");
+    logger.log(logger.formatFixedWidth("Count",              colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Avg Flight",         colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Avg Dist",           colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Avg Charge",         colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Total Faults",       colWidth) + " | ", false);
+    logger.logLine(logger.formatFixedWidth("PAX Miles",      colWidth) + " | ", false);
 
-    logger.log(logger.formatTableCell("Type",               colWidth) + " | ");
-    logger.log(logger.formatTableCell("",                   colWidth) + " | ", false);
-    logger.log(logger.formatTableCell("Time (hrs)",         colWidth) + " | ", false);
-    logger.log(logger.formatTableCell("(miles)",            colWidth) + " | ", false);
-    logger.log(logger.formatTableCell("Time (hrs)",         colWidth) + " | ", false);
-    logger.log(logger.formatTableCell("",                   colWidth) + " | ", false);
-    logger.logLine(logger.formatTableCell("(miles)",        colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Type",               colWidth) + " | ");
+    logger.log(logger.formatFixedWidth("",                   colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Time (hrs)",         colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("(miles)",            colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Time (hrs)",         colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("",                   colWidth) + " | ", false);
+    logger.logLine(logger.formatFixedWidth("(miles)",        colWidth) + " | ", false);
 
     logger.logLine(separator);
 
     // Per-Type data
     for (const auto& pair : typeStats) {
         const auto& stats = pair.second;
-        logger.log(logger.formatTableCell(stats.manufacturerName,                           colWidth) +  " | ");
-        logger.log(logger.formatTableCell(std::to_string(stats.vehicleCount),               colWidth) +  " | ", false);
-        logger.log(logger.formatTableCell(std::to_string(stats.avgFlightTimePerFlight()),   colWidth) +  " | ", false);
-        logger.log(logger.formatTableCell(std::to_string(stats.avgDistancePerFlight()),     colWidth) +  " | ", false);
-        logger.log(logger.formatTableCell(std::to_string(stats.avgChargingTimePerSession()),colWidth) +  " | ", false);
-        logger.log(logger.formatTableCell(std::to_string(stats.totalFaults) + "(" + std::to_string(stats.getFaultRate()) + ")",                colWidth) +  " | ", false);
-        logger.logLine(logger.formatTableCell(std::to_string(stats.totalPassengerMiles),    colWidth) +  " | ", false);
+        logger.log(logger.formatFixedWidth(stats.manufacturerName,                           colWidth) +  " | ");
+        logger.log(logger.formatFixedWidth(std::to_string(stats.vehicleCount),               colWidth) +  " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.avgFlightTimePerFlight()),   colWidth) +  " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.avgDistancePerFlight()),     colWidth) +  " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.avgChargingTimePerSession()),colWidth) +  " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.totalFaults) + "(" + std::to_string(stats.getFaultRate()) + ")",                colWidth) +  " | ", false);
+        logger.logLine(logger.formatFixedWidth(std::to_string(stats.totalPassengerMiles),    colWidth) +  " | ", false);
     }
     logger.logLine(separator);
 }
@@ -325,7 +325,7 @@ void Simulation::printFinalStatus() {
     logger.logLine();
 
     logger.logLine("Outputs:");
-    logger.logLine("  Log File: " + logger.getLogFileName());
+    logger.logLine("  Log File: " + logger.getLogFile());
     logger.logLine();
 
     logger.logSectionDivider("eVTOL Simulation DONE");
