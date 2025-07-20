@@ -124,29 +124,6 @@ void Simulation::updateVehicleStats(Vehicle* vehicle) {
                    vStats.lastUpdatesToString());
 }
 
-void Simulation::printChargingQueue() {
-    logger.log("Charging Queue:");
-    std::queue<Vehicle*> tempQueue = chargingQueue;
-    while (!tempQueue.empty()) {
-        Vehicle* vehicle = tempQueue.front();
-        tempQueue.pop();
-        logger.log("  Vehicle " + std::to_string(vehicle->getId()), false);
-    }
-    logger.logLine("", false);
-}
-
-void Simulation::printChargingStations() {
-    logger.log("Charging Stations:");
-    for (int i = 0; i < numChargers; i++) {
-        if (chargingStations[i] == nullptr) {
-            logger.log("  Charger " + std::to_string(i) + ": Available", false);
-        } else {
-            logger.log("  Charger " + std::to_string(i) + ": Vehicle " + std::to_string(chargingStations[i]->getId()), false);
-        }
-    }
-    logger.logLine("", false);
-}
-
 void Simulation::manageCharging() {
 
     // Add vehicles that need charging to queue
@@ -352,4 +329,27 @@ void Simulation::printFinalStatus() {
     logger.logLine();
 
     logger.logSectionDivider("eVTOL Simulation DONE");
+}
+
+void Simulation::printChargingQueue() {
+    logger.log("Charging Queue:");
+    std::queue<Vehicle*> tempQueue = chargingQueue;
+    while (!tempQueue.empty()) {
+        Vehicle* vehicle = tempQueue.front();
+        tempQueue.pop();
+        logger.log("  Vehicle " + std::to_string(vehicle->getId()), false);
+    }
+    logger.logLine("", false);
+}
+
+void Simulation::printChargingStations() {
+    logger.log("Charging Stations:");
+    for (int i = 0; i < numChargers; i++) {
+        if (chargingStations[i] == nullptr) {
+            logger.log("  Charger " + std::to_string(i) + ": Available", false);
+        } else {
+            logger.log("  Charger " + std::to_string(i) + ": Vehicle " + std::to_string(chargingStations[i]->getId()), false);
+        }
+    }
+    logger.logLine("", false);
 }
