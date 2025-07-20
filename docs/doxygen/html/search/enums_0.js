@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['manufacturer_0',['Manufacturer',['../class_vehicle.html#adfbadbefb077d5a172b102c349790439',1,'Vehicle']]]
+  ['logmode_0',['LogMode',['../class_logger.html#a8d012ee26c399380f002d9c49ecc046b',1,'Logger']]]
 ];

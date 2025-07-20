@@ -10,6 +10,6 @@ var annotated_dup =
     [ "Simulation", "class_simulation.html", "class_simulation" ],
     [ "StdRandomGenerator", "class_std_random_generator.html", "class_std_random_generator" ],
     [ "Vehicle", "class_vehicle.html", "class_vehicle" ],
-    [ "VehicleStatistics", "struct_vehicle_statistics.html", "struct_vehicle_statistics" ],
+    [ "VehicleStats", "struct_vehicle_stats.html", "struct_vehicle_stats" ],
     [ "VehicleTypeStats", "struct_vehicle_type_stats.html", "struct_vehicle_type_stats" ]
 ];

@@ -1,15 +1,19 @@
 var searchData=
 [
-  ['tostring_0',['toString',['../struct_vehicle_type_stats.html#a1a5e2b0bde6436d8cb8c76b3f46e5bf1',1,'VehicleTypeStats::toString()'],['../struct_vehicle_statistics.html#a9338d7edb55d303e7c15a0551bf9e61c',1,'VehicleStatistics::toString()']]],
-  ['totalcharges_1',['totalCharges',['../struct_vehicle_type_stats.html#a12032cc9478d8a3b3feedeb40a9bedca',1,'VehicleTypeStats']]],
-  ['totalchargingtime_2',['totalChargingTime',['../struct_vehicle_type_stats.html#ae545a8fb319c9fc64240c8becc14a02a',1,'VehicleTypeStats::totalChargingTime'],['../struct_vehicle_statistics.html#a7d03a40f6a675fb25cc4bf1c697f6147',1,'VehicleStatistics::totalChargingTime']]],
-  ['totaldistance_3',['totalDistance',['../struct_vehicle_type_stats.html#ab43405fcd7748256c05523e53503459a',1,'VehicleTypeStats']]],
-  ['totaldistancetraveled_4',['totalDistanceTraveled',['../struct_vehicle_statistics.html#a41784c082faeef8e3167412af089ae49',1,'VehicleStatistics']]],
-  ['totalfaultedtime_5',['totalFaultedTime',['../struct_vehicle_statistics.html#acafa2d45d38630dec03da17e2f74a354',1,'VehicleStatistics']]],
-  ['totalfaults_6',['totalFaults',['../struct_vehicle_type_stats.html#a4c436f5ecdf51b794c7e139a090cd889',1,'VehicleTypeStats::totalFaults'],['../struct_vehicle_statistics.html#af8ce7ca08fed8988fc36326de3dace25',1,'VehicleStatistics::totalFaults']]],
-  ['totalflights_7',['totalFlights',['../struct_vehicle_type_stats.html#a90653de1fefafd18e23899e0ecd7d923',1,'VehicleTypeStats']]],
-  ['totalflighttime_8',['totalFlightTime',['../struct_vehicle_type_stats.html#a3ddf8b99b15a036111196a00f77fef0a',1,'VehicleTypeStats::totalFlightTime'],['../struct_vehicle_statistics.html#a1a37ab6bd2230afb3391f6326c1df0ca',1,'VehicleStatistics::totalFlightTime']]],
-  ['totalpassengermiles_9',['totalPassengerMiles',['../struct_vehicle_type_stats.html#a451da54799c79c01b901824f82b4fea8',1,'VehicleTypeStats::totalPassengerMiles'],['../struct_vehicle_statistics.html#acfe530b62da0444c7e05e55860e6c1ef',1,'VehicleStatistics::totalPassengerMiles']]],
-  ['totalqueuedtime_10',['totalQueuedTime',['../struct_vehicle_statistics.html#a0ecd556a4cc8cd8d1004ba0d385a893d',1,'VehicleStatistics']]],
-  ['totalstostring_11',['totalsToString',['../struct_vehicle_statistics.html#ac47d44e2891d11a0a21994eb4530aaf9',1,'VehicleStatistics']]]
+  ['seconds_5fto_5fhours_0',['SECONDS_TO_HOURS',['../simulation_8hpp.html#a12e210f4c5805ceb71ced847e613b1f6',1,'simulation.hpp']]],
+  ['setbatterylevel_1',['setBatteryLevel',['../class_vehicle.html#ae661bb4b0b158dea3da46bc472d39594',1,'Vehicle']]],
+  ['setcurrentstate_2',['setCurrentState',['../class_vehicle.html#a89cbaba0bf85e9167112e383f546efff',1,'Vehicle']]],
+  ['setincludetimestampinfile_3',['setIncludeTimestampInFile',['../class_logger.html#a38086bf793c69a76670b2ae764c5a962',1,'Logger']]],
+  ['setlogfile_4',['setLogFile',['../class_logger.html#a15bfbc50a348a24b8ff7c5d49feef1df',1,'Logger']]],
+  ['setlogmode_5',['setLogMode',['../class_logger.html#ad5860554512196e8d6a45b1a46324536',1,'Logger']]],
+  ['simulation_6',['Simulation',['../class_simulation.html',1,'Simulation'],['../class_simulation.html#ae5d3833948952842b8f6732f17212137',1,'Simulation::Simulation()']]],
+  ['simulation_2ecpp_7',['simulation.cpp',['../simulation_8cpp.html',1,'']]],
+  ['simulation_2ehpp_8',['simulation.hpp',['../simulation_8hpp.html',1,'']]],
+  ['simulationtest_9',['SimulationTest',['../class_simulation.html#a99a505f087102062f0fe093bce00b397',1,'Simulation']]],
+  ['startcharging_10',['startCharging',['../class_vehicle.html#a01e15f6fd0cc13687750325f28c1622c',1,'Vehicle']]],
+  ['state_11',['State',['../class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0',1,'Vehicle']]],
+  ['std_5frng_2ecpp_12',['std_rng.cpp',['../std__rng_8cpp.html',1,'']]],
+  ['std_5frng_2ehpp_13',['std_rng.hpp',['../std__rng_8hpp.html',1,'']]],
+  ['stdout_5fonly_14',['STDOUT_ONLY',['../class_logger.html#a8d012ee26c399380f002d9c49ecc046ba36f274c34efdbb87ce67d87db7f8a34f',1,'Logger']]],
+  ['stdrandomgenerator_15',['StdRandomGenerator',['../class_std_random_generator.html',1,'']]]
 ];

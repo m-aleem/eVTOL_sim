@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['queued_0',['Queued',['../class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0a7b2f31b90fe1c2cc33a52233c1925df3',1,'Vehicle']]]
+  ['passengermiles_0',['passengerMiles',['../struct_vehicle_stats.html#af14b96d127b8dbb048375fef6543f70f',1,'VehicleStats']]],
+  ['printusage_1',['printUsage',['../main_8cpp.html#afab1557244eb6ab3cb446f0e7cad8905',1,'main.cpp']]]
 ];

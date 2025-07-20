@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['seconds_5fto_5fhours_0',['SECONDS_TO_HOURS',['../simulation_8hpp.html#a12e210f4c5805ceb71ced847e613b1f6',1,'simulation.hpp']]]
+  ['num_5fvehicle_5ftypes_0',['NUM_VEHICLE_TYPES',['../simulation_8hpp.html#ac3e11cff7d2936a68013ca41f374562a',1,'simulation.hpp']]]
 ];

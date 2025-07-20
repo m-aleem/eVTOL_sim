@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['uniformint_0',['uniformInt',['../class_random_generator.html#ac006fe7555a2652cb2ac8e00bc31281f',1,'RandomGenerator::uniformInt()'],['../class_std_random_generator.html#a2b48481022ff244a4c6db87272f40a46',1,'StdRandomGenerator::uniformInt()']]],
-  ['updatestate_1',['updateState',['../class_vehicle.html#a679d66b00c8f2e8c350acac52062f437',1,'Vehicle']]]
+  ['tolongstring_0',['toLongString',['../struct_vehicle_stats.html#a35ff8199e6f75f104991b771de152f99',1,'VehicleStats']]],
+  ['toshortstring_1',['toShortString',['../struct_vehicle_stats.html#a8c65720ebc6d0a161a6d7673d0cf67ac',1,'VehicleStats']]],
+  ['tostring_2',['toString',['../struct_vehicle_type_stats.html#a1a5e2b0bde6436d8cb8c76b3f46e5bf1',1,'VehicleTypeStats::toString()'],['../struct_vehicle_stats.html#ab42f0b155eb17c4901e4278ff60874ab',1,'VehicleStats::toString()']]]
 ];

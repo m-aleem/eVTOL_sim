@@ -94,25 +94,67 @@ $(function(){initNavTree('class_logger.html','','class_logger-members'); });
 
 <p><code>#include &lt;<a class="el" href="logger_8hpp_source.html">logger.hpp</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-pub-types" class="groupheader"><a id="pub-types" name="pub-types"></a>
+Public Types</h2></td></tr>
+<tr class="memitem:a8d012ee26c399380f002d9c49ecc046b" id="r_a8d012ee26c399380f002d9c49ecc046b"><td class="memItemLeft" align="right" valign="top">enum class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8d012ee26c399380f002d9c49ecc046b">LogMode</a> { <a class="el" href="#a8d012ee26c399380f002d9c49ecc046ba36f274c34efdbb87ce67d87db7f8a34f">STDOUT_ONLY</a>
+, <a class="el" href="#a8d012ee26c399380f002d9c49ecc046bae01fd8e0bc4c8033388d27b1fffc2e03">FILE_ONLY</a>
+, <a class="el" href="#a8d012ee26c399380f002d9c49ecc046ba6328e5e3186c227a021ef2ff77e40197">BOTH</a>
+ }</td></tr>
+<tr class="memdesc:a8d012ee26c399380f002d9c49ecc046b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration for different logging output modes.  <a href="#a8d012ee26c399380f002d9c49ecc046b">More...</a><br /></td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a056c4eb8fcaefb58d3bd73be19db7c04" id="r_a056c4eb8fcaefb58d3bd73be19db7c04"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a056c4eb8fcaefb58d3bd73be19db7c04">Logger</a> (const std::string &amp;filename=&quot;&quot;)</td></tr>
+<tr class="memitem:a192a426a0de9635029ce81fbb42d33f8" id="r_a192a426a0de9635029ce81fbb42d33f8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a192a426a0de9635029ce81fbb42d33f8">Logger</a> (const std::string &amp;filename=&quot;&quot;, <a class="el" href="#a8d012ee26c399380f002d9c49ecc046b">LogMode</a> mode=<a class="el" href="#a8d012ee26c399380f002d9c49ecc046ba6328e5e3186c227a021ef2ff77e40197">LogMode::BOTH</a>)</td></tr>
 <tr class="memitem:acb668a9e186a25fbaad2e4af6d1ed00a" id="r_acb668a9e186a25fbaad2e4af6d1ed00a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acb668a9e186a25fbaad2e4af6d1ed00a">~Logger</a> ()</td></tr>
-<tr class="memitem:afb5706babcdc21ace3df6524c466775b" id="r_afb5706babcdc21ace3df6524c466775b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb5706babcdc21ace3df6524c466775b">formatTableCell</a> (const std::string &amp;text, int width)</td></tr>
 <tr class="memitem:a766d2091ed9f304ac52a69669e8fbc44" id="r_a766d2091ed9f304ac52a69669e8fbc44"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a766d2091ed9f304ac52a69669e8fbc44">log</a> (const std::string &amp;message, bool includeTimestamp=true)</td></tr>
 <tr class="memitem:a6f596d6285170003c045c861dd5b04eb" id="r_a6f596d6285170003c045c861dd5b04eb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6f596d6285170003c045c861dd5b04eb">logLine</a> (const std::string &amp;message=&quot;&quot;, bool includeTimestamp=true)</td></tr>
 <tr class="memitem:aa76b38543141bc2a5aebfa81a0cda587" id="r_aa76b38543141bc2a5aebfa81a0cda587"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa76b38543141bc2a5aebfa81a0cda587">logSectionDivider</a> (const std::string &amp;message=&quot;&quot;, bool includeTimestamp=true)</td></tr>
 <tr class="memitem:ae3639378e5dffd00d27e7a420316abbc" id="r_ae3639378e5dffd00d27e7a420316abbc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae3639378e5dffd00d27e7a420316abbc">logSubSectionDivider</a> (const std::string &amp;message=&quot;&quot;, bool includeTimestamp=true)</td></tr>
-<tr class="memitem:ae73497b422bdfda22d9d487c515313db" id="r_ae73497b422bdfda22d9d487c515313db"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae73497b422bdfda22d9d487c515313db">setLogFileName</a> (const std::string &amp;filename)</td></tr>
-<tr class="memitem:aa1021d60d4070cc25f2d89bb6c0d5f1b" id="r_aa1021d60d4070cc25f2d89bb6c0d5f1b"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa1021d60d4070cc25f2d89bb6c0d5f1b">getLogFileName</a> () const</td></tr>
+<tr class="memitem:aed148cf2caa53b2c72611ed353583f28" id="r_aed148cf2caa53b2c72611ed353583f28"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed148cf2caa53b2c72611ed353583f28">formatFixedWidth</a> (const std::string &amp;text, int width, bool rightAlign=true)</td></tr>
+<tr class="memitem:a15bfbc50a348a24b8ff7c5d49feef1df" id="r_a15bfbc50a348a24b8ff7c5d49feef1df"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a15bfbc50a348a24b8ff7c5d49feef1df">setLogFile</a> (const std::string &amp;filename)</td></tr>
+<tr class="memitem:abc0185908102e8fb28a532a017f89b5f" id="r_abc0185908102e8fb28a532a017f89b5f"><td class="memItemLeft" align="right" valign="top">std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc0185908102e8fb28a532a017f89b5f">getLogFile</a> () const</td></tr>
+<tr class="memitem:ad5860554512196e8d6a45b1a46324536" id="r_ad5860554512196e8d6a45b1a46324536"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad5860554512196e8d6a45b1a46324536">setLogMode</a> (<a class="el" href="#a8d012ee26c399380f002d9c49ecc046b">LogMode</a> mode)</td></tr>
+<tr class="memitem:a5d61bde4f5b019f355aa1f9fc58d750c" id="r_a5d61bde4f5b019f355aa1f9fc58d750c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="#a8d012ee26c399380f002d9c49ecc046b">LogMode</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d61bde4f5b019f355aa1f9fc58d750c">getLogMode</a> () const</td></tr>
+<tr class="memitem:a38086bf793c69a76670b2ae764c5a962" id="r_a38086bf793c69a76670b2ae764c5a962"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a38086bf793c69a76670b2ae764c5a962">setIncludeTimestampInFile</a> (bool enable)</td></tr>
+<tr class="memitem:a5cd7f99443d561251b89824538145947" id="r_a5cd7f99443d561251b89824538145947"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5cd7f99443d561251b89824538145947">getIncludeTimestampInFile</a> () const</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-static-methods" class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a673b2d6339bbe59f7cdd8c00deaae9d0" id="r_a673b2d6339bbe59f7cdd8c00deaae9d0"><td class="memItemLeft" align="right" valign="top">static std::string&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a673b2d6339bbe59f7cdd8c00deaae9d0">getCurrentTimestamp</a> ()</td></tr>
 </table>
+<a name="doc-enum-members" id="doc-enum-members"></a><h2 id="header-doc-enum-members" class="groupheader">Member Enumeration Documentation</h2>
+<a id="a8d012ee26c399380f002d9c49ecc046b" name="a8d012ee26c399380f002d9c49ecc046b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8d012ee26c399380f002d9c49ecc046b">&#9670;&#160;</a></span>LogMode</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum class <a class="el" href="#a8d012ee26c399380f002d9c49ecc046b">Logger::LogMode</a></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel strong">strong</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Enumeration for different logging output modes. </p>
+<table class="fieldtable">
+<tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><a id="a8d012ee26c399380f002d9c49ecc046ba36f274c34efdbb87ce67d87db7f8a34f" name="a8d012ee26c399380f002d9c49ecc046ba36f274c34efdbb87ce67d87db7f8a34f"></a>STDOUT_ONLY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8d012ee26c399380f002d9c49ecc046bae01fd8e0bc4c8033388d27b1fffc2e03" name="a8d012ee26c399380f002d9c49ecc046bae01fd8e0bc4c8033388d27b1fffc2e03"></a>FILE_ONLY&#160;</td><td class="fielddoc"></td></tr>
+<tr><td class="fieldname"><a id="a8d012ee26c399380f002d9c49ecc046ba6328e5e3186c227a021ef2ff77e40197" name="a8d012ee26c399380f002d9c49ecc046ba6328e5e3186c227a021ef2ff77e40197"></a>BOTH&#160;</td><td class="fielddoc"></td></tr>
+</table>
+
+</div>
+</div>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="a056c4eb8fcaefb58d3bd73be19db7c04" name="a056c4eb8fcaefb58d3bd73be19db7c04"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a056c4eb8fcaefb58d3bd73be19db7c04">&#9670;&#160;</a></span>Logger()</h2>
+<a id="a192a426a0de9635029ce81fbb42d33f8" name="a192a426a0de9635029ce81fbb42d33f8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a192a426a0de9635029ce81fbb42d33f8">&#9670;&#160;</a></span>Logger()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -120,8 +162,12 @@ Static Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">Logger::Logger </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span></td><td>)</td>
+          <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em></span><span class="paramdefsep"> = </span><span class="paramdefval">&quot;&quot;</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="#a8d012ee26c399380f002d9c49ecc046b">LogMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="#a8d012ee26c399380f002d9c49ecc046ba6328e5e3186c227a021ef2ff77e40197">LogMode::BOTH</a></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -146,21 +192,26 @@ Static Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a name="doc-func-members" id="doc-func-members"></a><h2 id="header-doc-func-members" class="groupheader">Member Function Documentation</h2>
-<a id="afb5706babcdc21ace3df6524c466775b" name="afb5706babcdc21ace3df6524c466775b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb5706babcdc21ace3df6524c466775b">&#9670;&#160;</a></span>formatTableCell()</h2>
+<a id="aed148cf2caa53b2c72611ed353583f28" name="aed148cf2caa53b2c72611ed353583f28"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed148cf2caa53b2c72611ed353583f28">&#9670;&#160;</a></span>formatFixedWidth()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Logger::formatTableCell </td>
+          <td class="memname">std::string Logger::formatFixedWidth </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>text</em></span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>width</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>width</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>rightAlign</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -192,14 +243,48 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="aa1021d60d4070cc25f2d89bb6c0d5f1b" name="aa1021d60d4070cc25f2d89bb6c0d5f1b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa1021d60d4070cc25f2d89bb6c0d5f1b">&#9670;&#160;</a></span>getLogFileName()</h2>
+<a id="a5cd7f99443d561251b89824538145947" name="a5cd7f99443d561251b89824538145947"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5cd7f99443d561251b89824538145947">&#9670;&#160;</a></span>getIncludeTimestampInFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Logger::getLogFileName </td>
+          <td class="memname">bool Logger::getIncludeTimestampInFile </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="abc0185908102e8fb28a532a017f89b5f" name="abc0185908102e8fb28a532a017f89b5f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc0185908102e8fb28a532a017f89b5f">&#9670;&#160;</a></span>getLogFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::string Logger::getLogFile </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a5d61bde4f5b019f355aa1f9fc58d750c" name="a5d61bde4f5b019f355aa1f9fc58d750c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d61bde4f5b019f355aa1f9fc58d750c">&#9670;&#160;</a></span>getLogMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="#a8d012ee26c399380f002d9c49ecc046b">Logger::LogMode</a> Logger::getLogMode </td>
           <td>(</td>
           <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
           <td> const</td>
@@ -293,16 +378,50 @@ Static Public Member Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ae73497b422bdfda22d9d487c515313db" name="ae73497b422bdfda22d9d487c515313db"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae73497b422bdfda22d9d487c515313db">&#9670;&#160;</a></span>setLogFileName()</h2>
+<a id="a38086bf793c69a76670b2ae764c5a962" name="a38086bf793c69a76670b2ae764c5a962"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a38086bf793c69a76670b2ae764c5a962">&#9670;&#160;</a></span>setIncludeTimestampInFile()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Logger::setLogFileName </td>
+          <td class="memname">void Logger::setIncludeTimestampInFile </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>enable</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a15bfbc50a348a24b8ff7c5d49feef1df" name="a15bfbc50a348a24b8ff7c5d49feef1df"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a15bfbc50a348a24b8ff7c5d49feef1df">&#9670;&#160;</a></span>setLogFile()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logger::setLogFile </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;</td>          <td class="paramname"><span class="paramname"><em>filename</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad5860554512196e8d6a45b1a46324536" name="ad5860554512196e8d6a45b1a46324536"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad5860554512196e8d6a45b1a46324536">&#9670;&#160;</a></span>setLogMode()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Logger::setLogMode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="#a8d012ee26c399380f002d9c49ecc046b">LogMode</a></td>          <td class="paramname"><span class="paramname"><em>mode</em></span></td><td>)</td>
           <td></td>
         </tr>
       </table>

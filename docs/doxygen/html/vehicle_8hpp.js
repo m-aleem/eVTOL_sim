@@ -1,6 +1,6 @@
 var vehicle_8hpp =
 [
-    [ "VehicleStatistics", "struct_vehicle_statistics.html", "struct_vehicle_statistics" ],
+    [ "VehicleStats", "struct_vehicle_stats.html", "struct_vehicle_stats" ],
     [ "Vehicle", "class_vehicle.html", "class_vehicle" ],
     [ "AlphaCompanyVehicle", "class_alpha_company_vehicle.html", "class_alpha_company_vehicle" ],
     [ "BravoCompanyVehicle", "class_bravo_company_vehicle.html", "class_bravo_company_vehicle" ],

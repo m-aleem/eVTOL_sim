@@ -12,6 +12,6 @@ var hierarchy =
       [ "DeltaCompanyVehicle", "class_delta_company_vehicle.html", null ],
       [ "EchoCompanyVehicle", "class_echo_company_vehicle.html", null ]
     ] ],
-    [ "VehicleStatistics", "struct_vehicle_statistics.html", null ],
+    [ "VehicleStats", "struct_vehicle_stats.html", null ],
     [ "VehicleTypeStats", "struct_vehicle_type_stats.html", null ]
 ];

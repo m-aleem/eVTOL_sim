@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['manufacturer_0',['manufacturer',['../struct_vehicle_type_stats.html#a1995e4de92ea5ee85520c0d239bd48af',1,'VehicleTypeStats']]],
-  ['manufacturername_1',['manufacturerName',['../struct_vehicle_type_stats.html#a824797fd00477323cd5dc6b188679183',1,'VehicleTypeStats']]]
+  ['faultedtime_0',['faultedTime',['../struct_vehicle_stats.html#a63d22c1bae75fd8c1ff882dba158a24f',1,'VehicleStats']]],
+  ['faults_1',['faults',['../struct_vehicle_stats.html#a86c216f4c63938ad6bae5c9e4f13c80c',1,'VehicleStats']]],
+  ['flighttime_2',['flightTime',['../struct_vehicle_stats.html#a698870e6c4400d980d953e66d41bcef5',1,'VehicleStats']]]
 ];

@@ -91,6 +91,7 @@ $(function(){initNavTree('functions.html','',''); });
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3 class="doxsection"><a id="index_a" name="index_a"></a>- a -</h3><ul>
+<li>add()&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#afa7407e3d295a82a5c5bda49614d4987">VehicleStats</a></li>
 <li>AlphaCompanyVehicle()&#160;:&#160;<a class="el" href="class_alpha_company_vehicle.html#a0a9eca2438796bac9b9f3fbcb4dbf9ca">AlphaCompanyVehicle</a></li>
 <li>avgChargingTimePerSession()&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#a2108d0180c1e2566bb4dde79d2f7821e">VehicleTypeStats</a></li>
 <li>avgDistancePerFlight()&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#aff54ce74506a3765af6e650f2b8d9491">VehicleTypeStats</a></li>
@@ -106,6 +107,7 @@ $(function(){initNavTree('functions.html','',''); });
 
 <h3 class="doxsection"><a id="index_c" name="index_c"></a>- c -</h3><ul>
 <li>charge()&#160;:&#160;<a class="el" href="class_vehicle.html#acc47a8071ee168d707097b1a926f778d">Vehicle</a></li>
+<li>chargingTime&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#a653d475cd19d240740e7cb6b137e1982">VehicleStats</a></li>
 <li>CharlieCompanyVehicle()&#160;:&#160;<a class="el" href="class_charlie_company_vehicle.html#a88ee6ea881c5d2be6c5b25f041453ea2">CharlieCompanyVehicle</a></li>
 <li>checkFault()&#160;:&#160;<a class="el" href="class_vehicle.html#a93fbf674d69361479256d465cb954111">Vehicle</a></li>
 </ul>
@@ -114,6 +116,7 @@ $(function(){initNavTree('functions.html','',''); });
 <h3 class="doxsection"><a id="index_d" name="index_d"></a>- d -</h3><ul>
 <li>defaultRng()&#160;:&#160;<a class="el" href="class_vehicle.html#a195c41e20a0cf2903821ab2a7111cacf">Vehicle</a></li>
 <li>DeltaCompanyVehicle()&#160;:&#160;<a class="el" href="class_delta_company_vehicle.html#a0e5a8bec9c2208da943b8a5a48bdb0df">DeltaCompanyVehicle</a></li>
+<li>distanceTraveled&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#af21789361d067445841586e885bfaebc">VehicleStats</a></li>
 </ul>
 
 
@@ -123,14 +126,19 @@ $(function(){initNavTree('functions.html','',''); });
 
 
 <h3 class="doxsection"><a id="index_f" name="index_f"></a>- f -</h3><ul>
+<li>faultedTime&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#a63d22c1bae75fd8c1ff882dba158a24f">VehicleStats</a></li>
+<li>faults&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#a86c216f4c63938ad6bae5c9e4f13c80c">VehicleStats</a></li>
+<li>flightTime&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#a698870e6c4400d980d953e66d41bcef5">VehicleStats</a></li>
 <li>fly()&#160;:&#160;<a class="el" href="class_vehicle.html#a063c825e56c0cd279c72843e85e4c68f">Vehicle</a></li>
-<li>formatTableCell()&#160;:&#160;<a class="el" href="class_logger.html#afb5706babcdc21ace3df6524c466775b">Logger</a></li>
+<li>formatFixedWidth()&#160;:&#160;<a class="el" href="class_logger.html#aed148cf2caa53b2c72611ed353583f28">Logger</a></li>
+<li>FRIEND_TEST()&#160;:&#160;<a class="el" href="class_simulation.html#acd0aa130ef41dd4e615f7a5d8c42c45a">Simulation</a></li>
 </ul>
 
 
 <h3 class="doxsection"><a id="index_g" name="index_g"></a>- g -</h3><ul>
 <li>getBatteryCapacity()&#160;:&#160;<a class="el" href="class_vehicle.html#a57d41122f28e2ab5e9fd7c036dab8f92">Vehicle</a></li>
 <li>getBatteryLevel()&#160;:&#160;<a class="el" href="class_vehicle.html#a72839ba9c175f3721dbaa03097f851d2">Vehicle</a></li>
+<li>getBatteryPercent()&#160;:&#160;<a class="el" href="class_vehicle.html#aa43cfb8cea80484644e9153799c0ef1d">Vehicle</a></li>
 <li>getCruiseSpeed()&#160;:&#160;<a class="el" href="class_vehicle.html#af1c7d728ead43347ec83fec29c5159a0">Vehicle</a></li>
 <li>getCurrentState()&#160;:&#160;<a class="el" href="class_vehicle.html#a94767972b1fdbea3292cd7887565e964">Vehicle</a></li>
 <li>getCurrentTimestamp()&#160;:&#160;<a class="el" href="class_logger.html#a673b2d6339bbe59f7cdd8c00deaae9d0">Logger</a></li>
@@ -138,14 +146,16 @@ $(function(){initNavTree('functions.html','',''); });
 <li>getFaultProbability()&#160;:&#160;<a class="el" href="class_vehicle.html#a32b4de4744f759f0d291dafc5058320b">Vehicle</a></li>
 <li>getFaultRate()&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#a34a6d3b5a91a1d1e2ae07b6787d7887d">VehicleTypeStats</a></li>
 <li>getId()&#160;:&#160;<a class="el" href="class_vehicle.html#acc208e54e31926eaf2eb5d236ab64d99">Vehicle</a></li>
-<li>getLogFileName()&#160;:&#160;<a class="el" href="class_logger.html#aa1021d60d4070cc25f2d89bb6c0d5f1b">Logger</a></li>
+<li>getIncludeTimestampInFile()&#160;:&#160;<a class="el" href="class_logger.html#a5cd7f99443d561251b89824538145947">Logger</a></li>
+<li>getLogFile()&#160;:&#160;<a class="el" href="class_logger.html#abc0185908102e8fb28a532a017f89b5f">Logger</a></li>
+<li>getLogMode()&#160;:&#160;<a class="el" href="class_logger.html#a5d61bde4f5b019f355aa1f9fc58d750c">Logger</a></li>
 <li>getManufacturer()&#160;:&#160;<a class="el" href="class_vehicle.html#acb0fd47f35a5f871ad4d3f78fd218cc8">Vehicle</a></li>
 <li>getManufacturerString()&#160;:&#160;<a class="el" href="class_vehicle.html#a6368e8383d4edf0c02a06d7d56bc5348">Vehicle</a></li>
 <li>getMaxFlightTime()&#160;:&#160;<a class="el" href="class_vehicle.html#a0ac31fecb14a8f4dcc132df12ad5e177">Vehicle</a></li>
 <li>getPassengerCount()&#160;:&#160;<a class="el" href="class_vehicle.html#a3193d16c1c68ec68afd81544f1d96735">Vehicle</a></li>
 <li>getPowerConsumptionRate()&#160;:&#160;<a class="el" href="class_vehicle.html#a39ed66cdef58de2d5d8ee6874ef93a12">Vehicle</a></li>
 <li>getStateString()&#160;:&#160;<a class="el" href="class_vehicle.html#afbd877a72893e056a8d2abca0e9ce428">Vehicle</a></li>
-<li>getStatistics()&#160;:&#160;<a class="el" href="class_vehicle.html#abe4f66a4b6ac77cc89fe0d73f30f83b1">Vehicle</a></li>
+<li>getStepStats()&#160;:&#160;<a class="el" href="class_vehicle.html#a7e0e1971a3f3a26837c2c02d2ca163bc">Vehicle</a></li>
 <li>getTimeToCharge()&#160;:&#160;<a class="el" href="class_vehicle.html#a3a19b4b3dabf980f92ff36eac16a316b">Vehicle</a></li>
 <li>getTotalChargingTime()&#160;:&#160;<a class="el" href="class_vehicle.html#ac3428ecaea3815d06d4b0572e33498ee">Vehicle</a></li>
 <li>getTotalDistanceTraveled()&#160;:&#160;<a class="el" href="class_vehicle.html#a36c1a96d656fc678b8345b7d15347c52">Vehicle</a></li>
@@ -154,21 +164,15 @@ $(function(){initNavTree('functions.html','',''); });
 <li>getTotalFlightTime()&#160;:&#160;<a class="el" href="class_vehicle.html#ac27d79564b4b539e7573dd868b41a4ec">Vehicle</a></li>
 <li>getTotalPassengerMiles()&#160;:&#160;<a class="el" href="class_vehicle.html#a040faffd93c471a6c272f3075b03eb0b">Vehicle</a></li>
 <li>getTotalQueuedTime()&#160;:&#160;<a class="el" href="class_vehicle.html#ad13d286be58195645c8718f9b9339c0a">Vehicle</a></li>
+<li>getTotalStats()&#160;:&#160;<a class="el" href="class_vehicle.html#aa2bc6f15edb6198a5a1902d2107b3d80">Vehicle</a></li>
 </ul>
 
 
 <h3 class="doxsection"><a id="index_l" name="index_l"></a>- l -</h3><ul>
-<li>lastUpdateChargingTime&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a14293f386a482599de8afdf08fd31cdf">VehicleStatistics</a></li>
-<li>lastUpdateDistanceTraveled&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a22ead463c5e303d72c331a829c19b523">VehicleStatistics</a></li>
-<li>lastUpdateFaultedTime&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a6649f805b5301aa47d8beb14aa4a059b">VehicleStatistics</a></li>
-<li>lastUpdateFaults&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a4c1ca401269b2c1cf0ac39aeda7ec0b8">VehicleStatistics</a></li>
-<li>lastUpdateFlightTime&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#aef68492049c431699828ef5d30e3db4a">VehicleStatistics</a></li>
-<li>lastUpdatePassengerMiles&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#aacf68699b82145eb8cadc26f575a16c6">VehicleStatistics</a></li>
-<li>lastUpdateQueuedTime&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#af76eacdf9a220e1af69767d20c9ab855">VehicleStatistics</a></li>
-<li>lastUpdatesToString()&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a8845a50f7cd260bd942ce9cb50cecec9">VehicleStatistics</a></li>
 <li>log()&#160;:&#160;<a class="el" href="class_logger.html#a766d2091ed9f304ac52a69669e8fbc44">Logger</a></li>
-<li>Logger()&#160;:&#160;<a class="el" href="class_logger.html#a056c4eb8fcaefb58d3bd73be19db7c04">Logger</a></li>
+<li>Logger()&#160;:&#160;<a class="el" href="class_logger.html#a192a426a0de9635029ce81fbb42d33f8">Logger</a></li>
 <li>logLine()&#160;:&#160;<a class="el" href="class_logger.html#a6f596d6285170003c045c861dd5b04eb">Logger</a></li>
+<li>LogMode&#160;:&#160;<a class="el" href="class_logger.html#a8d012ee26c399380f002d9c49ecc046b">Logger</a></li>
 <li>logSectionDivider()&#160;:&#160;<a class="el" href="class_logger.html#aa76b38543141bc2a5aebfa81a0cda587">Logger</a></li>
 <li>logSubSectionDivider()&#160;:&#160;<a class="el" href="class_logger.html#ae3639378e5dffd00d27e7a420316abbc">Logger</a></li>
 </ul>
@@ -181,10 +185,18 @@ $(function(){initNavTree('functions.html','',''); });
 </ul>
 
 
+<h3 class="doxsection"><a id="index_p" name="index_p"></a>- p -</h3><ul>
+<li>passengerMiles&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#af14b96d127b8dbb048375fef6543f70f">VehicleStats</a></li>
+</ul>
+
+
+<h3 class="doxsection"><a id="index_q" name="index_q"></a>- q -</h3><ul>
+<li>queuedTime&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#a89fb1d3b436615c9c29a2703b003c7bc">VehicleStats</a></li>
+</ul>
+
+
 <h3 class="doxsection"><a id="index_r" name="index_r"></a>- r -</h3><ul>
-<li>reset()&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#ac8fd6ab6c5761c9b135fc3b859d34cff">VehicleTypeStats</a></li>
-<li>resetStep()&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a0c050aa3905f87e8295532476127b169">VehicleStatistics</a></li>
-<li>resetTotals()&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a85a597ff56fc94c1a45f141351f3d995">VehicleStatistics</a></li>
+<li>reset()&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#a835ec682509efa66bf20262816a59dcc">VehicleStats</a>, <a class="el" href="struct_vehicle_type_stats.html#ac8fd6ab6c5761c9b135fc3b859d34cff">VehicleTypeStats</a></li>
 <li>runSimulation()&#160;:&#160;<a class="el" href="class_simulation.html#a274686ba8eec7024ad63b57e9b3f1e4f">Simulation</a></li>
 </ul>
 
@@ -192,26 +204,27 @@ $(function(){initNavTree('functions.html','',''); });
 <h3 class="doxsection"><a id="index_s" name="index_s"></a>- s -</h3><ul>
 <li>setBatteryLevel()&#160;:&#160;<a class="el" href="class_vehicle.html#ae661bb4b0b158dea3da46bc472d39594">Vehicle</a></li>
 <li>setCurrentState()&#160;:&#160;<a class="el" href="class_vehicle.html#a89cbaba0bf85e9167112e383f546efff">Vehicle</a></li>
-<li>setLogFileName()&#160;:&#160;<a class="el" href="class_logger.html#ae73497b422bdfda22d9d487c515313db">Logger</a></li>
+<li>setIncludeTimestampInFile()&#160;:&#160;<a class="el" href="class_logger.html#a38086bf793c69a76670b2ae764c5a962">Logger</a></li>
+<li>setLogFile()&#160;:&#160;<a class="el" href="class_logger.html#a15bfbc50a348a24b8ff7c5d49feef1df">Logger</a></li>
+<li>setLogMode()&#160;:&#160;<a class="el" href="class_logger.html#ad5860554512196e8d6a45b1a46324536">Logger</a></li>
 <li>Simulation()&#160;:&#160;<a class="el" href="class_simulation.html#ae5d3833948952842b8f6732f17212137">Simulation</a></li>
+<li>SimulationTest&#160;:&#160;<a class="el" href="class_simulation.html#a99a505f087102062f0fe093bce00b397">Simulation</a></li>
 <li>startCharging()&#160;:&#160;<a class="el" href="class_vehicle.html#a01e15f6fd0cc13687750325f28c1622c">Vehicle</a></li>
 <li>State&#160;:&#160;<a class="el" href="class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0">Vehicle</a></li>
 </ul>
 
 
 <h3 class="doxsection"><a id="index_t" name="index_t"></a>- t -</h3><ul>
-<li>toString()&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a9338d7edb55d303e7c15a0551bf9e61c">VehicleStatistics</a>, <a class="el" href="struct_vehicle_type_stats.html#a1a5e2b0bde6436d8cb8c76b3f46e5bf1">VehicleTypeStats</a></li>
+<li>toLongString()&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#a35ff8199e6f75f104991b771de152f99">VehicleStats</a></li>
+<li>toShortString()&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#a8c65720ebc6d0a161a6d7673d0cf67ac">VehicleStats</a></li>
+<li>toString()&#160;:&#160;<a class="el" href="struct_vehicle_stats.html#ab42f0b155eb17c4901e4278ff60874ab">VehicleStats</a>, <a class="el" href="struct_vehicle_type_stats.html#a1a5e2b0bde6436d8cb8c76b3f46e5bf1">VehicleTypeStats</a></li>
 <li>totalCharges&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#a12032cc9478d8a3b3feedeb40a9bedca">VehicleTypeStats</a></li>
-<li>totalChargingTime&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a7d03a40f6a675fb25cc4bf1c697f6147">VehicleStatistics</a>, <a class="el" href="struct_vehicle_type_stats.html#ae545a8fb319c9fc64240c8becc14a02a">VehicleTypeStats</a></li>
+<li>totalChargingTime&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#ae545a8fb319c9fc64240c8becc14a02a">VehicleTypeStats</a></li>
 <li>totalDistance&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#ab43405fcd7748256c05523e53503459a">VehicleTypeStats</a></li>
-<li>totalDistanceTraveled&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a41784c082faeef8e3167412af089ae49">VehicleStatistics</a></li>
-<li>totalFaultedTime&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#acafa2d45d38630dec03da17e2f74a354">VehicleStatistics</a></li>
-<li>totalFaults&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#af8ce7ca08fed8988fc36326de3dace25">VehicleStatistics</a>, <a class="el" href="struct_vehicle_type_stats.html#a4c436f5ecdf51b794c7e139a090cd889">VehicleTypeStats</a></li>
+<li>totalFaults&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#a4c436f5ecdf51b794c7e139a090cd889">VehicleTypeStats</a></li>
 <li>totalFlights&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#a90653de1fefafd18e23899e0ecd7d923">VehicleTypeStats</a></li>
-<li>totalFlightTime&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a1a37ab6bd2230afb3391f6326c1df0ca">VehicleStatistics</a>, <a class="el" href="struct_vehicle_type_stats.html#a3ddf8b99b15a036111196a00f77fef0a">VehicleTypeStats</a></li>
-<li>totalPassengerMiles&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#acfe530b62da0444c7e05e55860e6c1ef">VehicleStatistics</a>, <a class="el" href="struct_vehicle_type_stats.html#a451da54799c79c01b901824f82b4fea8">VehicleTypeStats</a></li>
-<li>totalQueuedTime&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#a0ecd556a4cc8cd8d1004ba0d385a893d">VehicleStatistics</a></li>
-<li>totalsToString()&#160;:&#160;<a class="el" href="struct_vehicle_statistics.html#ac47d44e2891d11a0a21994eb4530aaf9">VehicleStatistics</a></li>
+<li>totalFlightTime&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#a3ddf8b99b15a036111196a00f77fef0a">VehicleTypeStats</a></li>
+<li>totalPassengerMiles&#160;:&#160;<a class="el" href="struct_vehicle_type_stats.html#a451da54799c79c01b901824f82b4fea8">VehicleTypeStats</a></li>
 </ul>
 
 
