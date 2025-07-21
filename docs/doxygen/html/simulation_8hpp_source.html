@@ -201,69 +201,67 @@ $(function(){initNavTree('simulation_8hpp_source.html','',''); });
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="class_simulation.html#a274686ba8eec7024ad63b57e9b3f1e4f">runSimulation</a>(); <span class="comment">// Main simulation loop</span></div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="comment">// Allow access to private members for testing</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="class_simulation.html#a99a505f087102062f0fe093bce00b397">  103</a></span>    <span class="keyword">friend</span> <span class="keyword">class </span><a class="code hl_friend" href="class_simulation.html#a99a505f087102062f0fe093bce00b397">SimulationTest</a>;</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="class_simulation.html#acd0aa130ef41dd4e615f7a5d8c42c45a">  104</a></span>    <a class="code hl_function" href="class_simulation.html#acd0aa130ef41dd4e615f7a5d8c42c45a">FRIEND_TEST</a>(<a class="code hl_friend" href="class_simulation.html#a99a505f087102062f0fe093bce00b397">SimulationTest</a>, Initialization);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="class_simulation.html#aa781b6dc0ea846fd71db842794b186ba">  105</a></span>    <a class="code hl_function" href="class_simulation.html#aa781b6dc0ea846fd71db842794b186ba">FRIEND_TEST</a>(<a class="code hl_friend" href="class_simulation.html#a99a505f087102062f0fe093bce00b397">SimulationTest</a>, CreateVehicles);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="class_simulation.html#a4f8158191d9ac3a4b4fbcc2b6402501a">  106</a></span>    <a class="code hl_function" href="class_simulation.html#a4f8158191d9ac3a4b4fbcc2b6402501a">FRIEND_TEST</a>(<a class="code hl_friend" href="class_simulation.html#a99a505f087102062f0fe093bce00b397">SimulationTest</a>, TimeStep);</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno"><a class="line" href="class_simulation.html#a5d8ee28f5d645eeacfe5561c827e3a31">  107</a></span>    <a class="code hl_function" href="class_simulation.html#a5d8ee28f5d645eeacfe5561c827e3a31">FRIEND_TEST</a>(<a class="code hl_friend" href="class_simulation.html#a99a505f087102062f0fe093bce00b397">SimulationTest</a>, ChargingQueue);</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">private</span>:</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="comment">// Configuration</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">int</span> numVehicles;</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordtype">double</span> simHours;</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordtype">int</span> numChargers;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">double</span> simTimeStepSeconds;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">int</span> simLogVerbosity;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">bool</span> randomizeVehicles;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <a class="code hl_class" href="class_std_random_generator.html">StdRandomGenerator</a> rng;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">double</span> currentTime;</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordtype">double</span> timeStep;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordtype">int</span> stepCount;</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <span class="comment">// Simulation state</span></div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    std::vector&lt;std::unique_ptr&lt;Vehicle&gt;&gt; vehicles;</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    std::queue&lt;Vehicle*&gt; chargingQueue;</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    std::unordered_set&lt;Vehicle*&gt; queuedVehicles;</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    std::vector&lt;Vehicle*&gt; chargingStations; <span class="comment">// nullptr = available, Vehicle* = occupied</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="comment">// Logging</span></div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    <a class="code hl_class" href="class_logger.html">Logger</a> logger;</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    <span class="comment">// Statistics tracking</span></div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    std::map&lt;Vehicle::Manufacturer, VehicleTypeStats&gt; typeStats;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    <span class="comment">// Helper methods</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    std::unique_ptr&lt;Vehicle&gt; createVehicle(<span class="keywordtype">int</span> type);</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordtype">void</span> initializeVehicles();</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keywordtype">void</span> updateVehicleStats(<a class="code hl_class" href="class_vehicle.html">Vehicle</a>* vehicle);</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keywordtype">void</span> manageCharging();</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keywordtype">void</span> assignAvailableChargers();</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keywordtype">void</span> processChargingVehicles();</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keywordtype">void</span> updateAllVehicles(<span class="keywordtype">double</span> timeStep);</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    <span class="keywordtype">double</span> nextTimeStep() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno"><a class="line" href="class_simulation.html#acd0aa130ef41dd4e615f7a5d8c42c45a">  103</a></span>    <a class="code hl_function" href="class_simulation.html#acd0aa130ef41dd4e615f7a5d8c42c45a">FRIEND_TEST</a>(SimulationTest, Initialization);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno"><a class="line" href="class_simulation.html#aa781b6dc0ea846fd71db842794b186ba">  104</a></span>    <a class="code hl_function" href="class_simulation.html#aa781b6dc0ea846fd71db842794b186ba">FRIEND_TEST</a>(SimulationTest, CreateVehicles);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno"><a class="line" href="class_simulation.html#a4f8158191d9ac3a4b4fbcc2b6402501a">  105</a></span>    <a class="code hl_function" href="class_simulation.html#a4f8158191d9ac3a4b4fbcc2b6402501a">FRIEND_TEST</a>(SimulationTest, TimeStep);</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="class_simulation.html#a5d8ee28f5d645eeacfe5561c827e3a31">  106</a></span>    <a class="code hl_function" href="class_simulation.html#a5d8ee28f5d645eeacfe5561c827e3a31">FRIEND_TEST</a>(SimulationTest, ChargingQueue);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="comment">// Configuration</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordtype">int</span> numVehicles;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">double</span> simHours;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordtype">int</span> numChargers;</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordtype">double</span> simTimeStepSeconds;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">int</span> simLogVerbosity;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">bool</span> randomizeVehicles;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <a class="code hl_class" href="class_std_random_generator.html">StdRandomGenerator</a> rng;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordtype">double</span> currentTime;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>    <span class="keywordtype">double</span> timeStep;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="keywordtype">int</span> stepCount;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="comment">// Simulation state</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    std::vector&lt;std::unique_ptr&lt;Vehicle&gt;&gt; vehicles;</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    std::queue&lt;Vehicle*&gt; chargingQueue;</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    std::unordered_set&lt;Vehicle*&gt; queuedVehicles;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    std::vector&lt;Vehicle*&gt; chargingStations; <span class="comment">// nullptr = available, Vehicle* = occupied</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="comment">// Logging</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <a class="code hl_class" href="class_logger.html">Logger</a> logger;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="comment">// Statistics tracking</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    std::map&lt;Vehicle::Manufacturer, VehicleTypeStats&gt; typeStats;</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="comment">// Helper methods</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    std::unique_ptr&lt;Vehicle&gt; createVehicle(<span class="keywordtype">int</span> type);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    <span class="keywordtype">void</span> initializeVehicles();</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordtype">void</span> updateVehicleStats(<a class="code hl_class" href="class_vehicle.html">Vehicle</a>* vehicle);</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <span class="keywordtype">void</span> manageCharging();</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <span class="keywordtype">void</span> assignAvailableChargers();</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <span class="keywordtype">void</span> processChargingVehicles();</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>    <span class="keywordtype">void</span> updateAllVehicles(<span class="keywordtype">double</span> timeStep);</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="keywordtype">double</span> nextTimeStep() <span class="keyword">const</span>;</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keywordtype">void</span> showProgress(<span class="keywordtype">double</span> currentTime, <span class="keywordtype">double</span> totalTime);</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordtype">void</span> printInitialStatus();</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordtype">void</span> printChargingQueue();</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordtype">void</span> printChargingStations();</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordtype">void</span> printFinalStatus();</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordtype">void</span> printStatsTable();</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordtype">void</span> printVehicleStats(<span class="keyword">const</span> <a class="code hl_class" href="class_vehicle.html">Vehicle</a>* vehicle, <span class="keyword">const</span> <a class="code hl_struct" href="struct_vehicle_stats.html">VehicleStats</a>&amp; stepStats, <span class="keyword">const</span> <a class="code hl_struct" href="struct_vehicle_stats.html">VehicleStats</a>&amp; totalStat);</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keywordtype">void</span> printFaultStatsTable();</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>};</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    <span class="keywordtype">void</span> showProgress(<span class="keywordtype">double</span> currentTime, <span class="keywordtype">double</span> totalTime);</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordtype">void</span> printInitialStatus();</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordtype">void</span> printChargingQueue();</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordtype">void</span> printChargingStations();</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordtype">void</span> printFinalStatus();</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordtype">void</span> printStatsTable();</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordtype">void</span> printVehicleStats(<span class="keyword">const</span> <a class="code hl_class" href="class_vehicle.html">Vehicle</a>* vehicle, <span class="keyword">const</span> <a class="code hl_struct" href="struct_vehicle_stats.html">VehicleStats</a>&amp; stepStats, <span class="keyword">const</span> <a class="code hl_struct" href="struct_vehicle_stats.html">VehicleStats</a>&amp; totalStat);</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    <span class="keywordtype">void</span> printFaultStatsTable();</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>};</div>
 </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="preprocessor">#endif</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
 <div class="ttc" id="aclass_logger_html"><div class="ttname"><a href="class_logger.html">Logger</a></div><div class="ttdef"><b>Definition</b> logger.hpp:15</div></div>
 <div class="ttc" id="aclass_simulation_html_a274686ba8eec7024ad63b57e9b3f1e4f"><div class="ttname"><a href="class_simulation.html#a274686ba8eec7024ad63b57e9b3f1e4f">Simulation::runSimulation</a></div><div class="ttdeci">bool runSimulation()</div><div class="ttdef"><b>Definition</b> simulation.cpp:37</div></div>
 <div class="ttc" id="aclass_simulation_html_a4f8158191d9ac3a4b4fbcc2b6402501a"><div class="ttname"><a href="class_simulation.html#a4f8158191d9ac3a4b4fbcc2b6402501a">Simulation::FRIEND_TEST</a></div><div class="ttdeci">FRIEND_TEST(SimulationTest, TimeStep)</div></div>
 <div class="ttc" id="aclass_simulation_html_a5d8ee28f5d645eeacfe5561c827e3a31"><div class="ttname"><a href="class_simulation.html#a5d8ee28f5d645eeacfe5561c827e3a31">Simulation::FRIEND_TEST</a></div><div class="ttdeci">FRIEND_TEST(SimulationTest, ChargingQueue)</div></div>
-<div class="ttc" id="aclass_simulation_html_a99a505f087102062f0fe093bce00b397"><div class="ttname"><a href="class_simulation.html#a99a505f087102062f0fe093bce00b397">Simulation::SimulationTest</a></div><div class="ttdeci">friend class SimulationTest</div><div class="ttdef"><b>Definition</b> simulation.hpp:103</div></div>
 <div class="ttc" id="aclass_simulation_html_aa781b6dc0ea846fd71db842794b186ba"><div class="ttname"><a href="class_simulation.html#aa781b6dc0ea846fd71db842794b186ba">Simulation::FRIEND_TEST</a></div><div class="ttdeci">FRIEND_TEST(SimulationTest, CreateVehicles)</div></div>
 <div class="ttc" id="aclass_simulation_html_aabcfa929f9e6622346ece569f0229a91"><div class="ttname"><a href="class_simulation.html#aabcfa929f9e6622346ece569f0229a91">Simulation::~Simulation</a></div><div class="ttdeci">~Simulation()=default</div></div>
 <div class="ttc" id="aclass_simulation_html_acd0aa130ef41dd4e615f7a5d8c42c45a"><div class="ttname"><a href="class_simulation.html#acd0aa130ef41dd4e615f7a5d8c42c45a">Simulation::FRIEND_TEST</a></div><div class="ttdeci">FRIEND_TEST(SimulationTest, Initialization)</div></div>

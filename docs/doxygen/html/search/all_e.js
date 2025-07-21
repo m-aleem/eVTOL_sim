@@ -10,11 +10,10 @@ var searchData=
   ['simulation_7',['Simulation',['../class_simulation.html',1,'Simulation'],['../class_simulation.html#ad0f967bbb7eb94710ebcebf787da7744',1,'Simulation::Simulation()']]],
   ['simulation_2ecpp_8',['simulation.cpp',['../simulation_8cpp.html',1,'']]],
   ['simulation_2ehpp_9',['simulation.hpp',['../simulation_8hpp.html',1,'']]],
-  ['simulationtest_10',['SimulationTest',['../class_simulation.html#a99a505f087102062f0fe093bce00b397',1,'Simulation']]],
-  ['startcharging_11',['startCharging',['../class_vehicle.html#a01e15f6fd0cc13687750325f28c1622c',1,'Vehicle']]],
-  ['state_12',['State',['../class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0',1,'Vehicle']]],
-  ['std_5frng_2ecpp_13',['std_rng.cpp',['../std__rng_8cpp.html',1,'']]],
-  ['std_5frng_2ehpp_14',['std_rng.hpp',['../std__rng_8hpp.html',1,'']]],
-  ['stdout_5fonly_15',['STDOUT_ONLY',['../class_logger.html#a8d012ee26c399380f002d9c49ecc046ba36f274c34efdbb87ce67d87db7f8a34f',1,'Logger']]],
-  ['stdrandomgenerator_16',['StdRandomGenerator',['../class_std_random_generator.html',1,'']]]
+  ['startcharging_10',['startCharging',['../class_vehicle.html#a01e15f6fd0cc13687750325f28c1622c',1,'Vehicle']]],
+  ['state_11',['State',['../class_vehicle.html#a2157b2cfa66e6150e0be688b819a45f0',1,'Vehicle']]],
+  ['std_5frng_2ecpp_12',['std_rng.cpp',['../std__rng_8cpp.html',1,'']]],
+  ['std_5frng_2ehpp_13',['std_rng.hpp',['../std__rng_8hpp.html',1,'']]],
+  ['stdout_5fonly_14',['STDOUT_ONLY',['../class_logger.html#a8d012ee26c399380f002d9c49ecc046ba36f274c34efdbb87ce67d87db7f8a34f',1,'Logger']]],
+  ['stdrandomgenerator_15',['StdRandomGenerator',['../class_std_random_generator.html',1,'']]]
 ];
