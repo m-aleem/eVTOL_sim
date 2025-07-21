@@ -10,8 +10,8 @@
 #include <iomanip>
 #include <chrono>
 
-Logger::Logger(const std::string& filename, LogMode mode)
-    : currentMode(mode), includeTimestampInFile(true) {
+Logger::Logger(const std::string& filename, LogMode mode, int verbosity)
+    : currentMode(mode), includeTimestampInFile(true), verbosityLevel(verbosity) {
     logFileName = filename;
 
     // Only open file if we need to log to file
@@ -85,6 +85,14 @@ bool Logger::getIncludeTimestampInFile() const {
     return includeTimestampInFile;
 }
 
+void Logger::setVerbosityLevel(int level) {
+    verbosityLevel = level;
+}
+
+int Logger::getVerbosityLevel() const {
+    return verbosityLevel;
+}
+
 std::string Logger::formatFixedWidth(const std::string& text, int width, bool rightAlign) {
     std::ostringstream oss;
     if (rightAlign) {
@@ -122,6 +130,30 @@ void Logger::log(const std::string& message, bool includeTimestamp) {
 
 void Logger::logLine(const std::string& message, bool includeTimestamp) {
     log(message + "\n", includeTimestamp);
+}
+
+void Logger::log(int verbosity, const std::string& message, bool includeTimestamp) {
+    if (verbosity <= verbosityLevel) {
+        log(message, includeTimestamp);
+    }
+}
+
+void Logger::logLine(int verbosity, const std::string& message, bool includeTimestamp) {
+    if (verbosity <= verbosityLevel) {
+        logLine(message, includeTimestamp);
+    }
+}
+
+void Logger::logSectionDivider(int verbosity, const std::string& message, bool includeTimestamp) {
+    if (verbosity <= verbosityLevel) {
+        logSectionDivider(message, includeTimestamp);
+    }
+}
+
+void Logger::logSubSectionDivider(int verbosity, const std::string& message, bool includeTimestamp) {
+    if (verbosity <= verbosityLevel) {
+        logSubSectionDivider(message, includeTimestamp);
+    }
 }
 
 void Logger::logSectionDivider(const std::string& message, bool includeTimestamp) {

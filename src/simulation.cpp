@@ -14,11 +14,15 @@ Simulation::Simulation(
         int numVehicles,
         double simHours,
         int numChargers,
-        double simTimeStepSeconds)
+        double simTimeStepSeconds,
+        int simLogVerbosity,
+        bool randomizeVehicles)
     : numVehicles(numVehicles),
       simHours(simHours),
       numChargers(numChargers),
+      simLogVerbosity(simLogVerbosity),
       simTimeStepSeconds(simTimeStepSeconds),
+      randomizeVehicles(randomizeVehicles),
       chargingStations(numChargers, nullptr) {
 
         // Create output directory if it doesn't exist
@@ -26,6 +30,7 @@ Simulation::Simulation(
 
         std::string filename = "output/eVTOL_sim_report_" + logger.getCurrentTimestamp() + ".txt";
         logger.setLogFile(filename);
+        logger.setVerbosityLevel(simLogVerbosity);
 }
 
 /* Run Simulation*/
@@ -39,20 +44,16 @@ bool Simulation::runSimulation() {
     printInitialStatus();
     initializeVehicles();
 
+    // Save current logging mode and switch to file-only for detailed step output
+    Logger::LogMode originalMode = logger.getLogMode();
+    logger.setLogMode(Logger::LogMode::FILE_ONLY);
     while (currentTime < simHours) {
-        // Save current logging mode and switch to file-only for detailed step output
-        Logger::LogMode originalMode = logger.getLogMode();
-        logger.setLogMode(Logger::LogMode::FILE_ONLY);
-
-        logger.logSubSectionDivider("Simulation Step " + std::to_string(stepCount + 1));
-        logger.logLine("Current Time: " + std::to_string(currentTime) + " hours (Delta +" + std::to_string(timeStep) + " hours from previous step)");
+        logger.logSubSectionDivider(2, "Simulation Step " + std::to_string(stepCount + 1));
+        logger.logLine(2, "Current Time: " + std::to_string(currentTime) + " hours (Delta +" + std::to_string(timeStep) + " hours from previous step)");
 
         updateAllVehicles(timeStep);
         manageCharging();
-        processChargingVehicles(timeStep);
-
-        // Restore original logging mode
-        logger.setLogMode(originalMode);
+        processChargingVehicles();
 
         currentTime += timeStep;
         stepCount++;
@@ -64,11 +65,20 @@ bool Simulation::runSimulation() {
         }
     }
 
+    logger.setLogMode(Logger::LogMode::STDOUT_ONLY);
     logger.logLine("", false);
+    // Restore original logging mode
+    logger.setLogMode(originalMode);
+
     printStatsTable();
+    printFaultStatsTable();
     printFinalStatus();
 
     return success;
+}
+
+double Simulation::nextTimeStep() const {
+    return std::min(simTimeStepSeconds * SECONDS_TO_HOURS, simHours - currentTime);
 }
 
 void Simulation::updateAllVehicles(double timeStep) {
@@ -113,29 +123,13 @@ void Simulation::updateVehicleStats(Vehicle* vehicle) {
 
     lastState[vehicle] = currentState;
 
-
-    // Print
-    int batteryPercent = static_cast<int>(vehicle->getBatteryPercent() + 0.5);
-    std::string batteryDisplay = "Battery " + std::to_string(batteryPercent) + "%";
-    std::string stepSection = stepStats.toShortString();
-    std::string totalSection = totalStats.toLongString();
-
-    const int stepWidth = 40;
-    const int totalWidth = 140;
-
-    stepSection.resize(stepWidth, ' ');   // Pad with spaces
-    totalSection.resize(totalWidth, ' '); // Pad with spaces
-
-    logger.logLine(logger.formatFixedWidth("Vehicle " + std::to_string(vehicle->getId()) + " (" + vehicle->getManufacturerString() + ")   ", 30) +
-                   "[" + logger.formatFixedWidth(vehicle->getStateString(), 8) + "]   " +
-                   "[" + logger.formatFixedWidth(batteryDisplay, 12) + "]   " +
-                   "Step: " + stepSection + " | Total: " + totalSection);
+    printVehicleStats(vehicle, stepStats, totalStats);
 }
 
 void Simulation::manageCharging() {
 
-    logger.logLine();
-    logger.logLine("Manage Charging Queue");
+    logger.logLine(2);
+    logger.logLine(2, "Manage Charging Queue");
 
     // Add vehicles that need charging to queue
     for (const auto& vehicle : vehicles) {
@@ -150,15 +144,15 @@ void Simulation::manageCharging() {
     }
 
     printChargingQueue();
-    logger.logLine();
+    logger.logLine(2);
 
     assignAvailableChargers();
 }
 
 void Simulation::assignAvailableChargers() {
 
-    logger.logLine();
-    logger.logLine("Assign Available Chargers");
+    logger.logLine(2);
+    logger.logLine(2, "Assign Available Chargers");
 
     // Assign available chargers to queued vehicles
     for (int i = 0; i < numChargers && !chargingQueue.empty(); i++) {
@@ -175,10 +169,10 @@ void Simulation::assignAvailableChargers() {
     }
 
     printChargingStations();
-    logger.logLine();
+    logger.logLine(2);
 }
 
-void Simulation::processChargingVehicles(double timeStep) {
+void Simulation::processChargingVehicles() {
     for (int i = 0; i < numChargers; ++i) {
         if (chargingStations[i] != nullptr) {
             Vehicle* vehicle = chargingStations[i];
@@ -214,19 +208,27 @@ void Simulation::initializeVehicles() {
 
     // Generate vehicles
     for(int i = 0; i < numVehicles; ++i) {
-        int type = rng.uniformInt(0, NUM_VEHICLE_TYPES - 1); // Randomly select vehicle type
+        int type;
+        if (randomizeVehicles) {
+            type = rng.uniformInt(0, NUM_VEHICLE_TYPES - 1);
+        } else {
+            type = i % NUM_VEHICLE_TYPES; // Round-robin selection (equal distribution, for testing)
+        }
+
         auto vehicle = createVehicle(type);
         if (vehicle) {
             std::string name = vehicle->getManufacturerString();
             vehicleCounts[name]++;
             vehicles.push_back(std::move(vehicle));
         }
+
     }
 
     // Initialize type statistics
     for (const auto& vehicle : vehicles) {
         if (typeStats.find(vehicle->getManufacturer()) == typeStats.end()) {
             typeStats[vehicle->getManufacturer()].manufacturerName = vehicle->getManufacturerString();
+            typeStats[vehicle->getManufacturer()].expectedFaultRate = vehicle->getFaultProbability();
         }
         typeStats[vehicle->getManufacturer()].vehicleCount++;
     }
@@ -243,6 +245,24 @@ void Simulation::initializeVehicles() {
 
 
 /* Print Helpers */
+void Simulation::printVehicleStats(const Vehicle* vehicle, const VehicleStats& stepStats, const VehicleStats& totalStats) {
+    int batteryPercent = static_cast<int>(vehicle->getBatteryPercent() + 0.5);
+    std::string batteryDisplay = "Battery " + std::to_string(batteryPercent) + "%";
+    std::string stepSection = stepStats.toShortString();
+    std::string totalSection = totalStats.toLongString();
+
+    const int stepWidth = 40;
+    const int totalWidth = 140;
+
+    stepSection.resize(stepWidth, ' ');   // Pad with spaces
+    totalSection.resize(totalWidth, ' '); // Pad with spaces
+
+    logger.logLine(2, logger.formatFixedWidth("Vehicle " + std::to_string(vehicle->getId()) + " (" + vehicle->getManufacturerString() + ")   ", 30) +
+                   "[" + logger.formatFixedWidth(vehicle->getStateString(), 8) + "]   " +
+                   "[" + logger.formatFixedWidth(batteryDisplay, 12) + "]   " +
+                   "Step: " + stepSection + " | Total: " + totalSection);
+}
+
 void Simulation::showProgress(double currentTime, double totalTime) {
     const int barWidth = 50;
     double progress = currentTime / totalTime;
@@ -270,6 +290,9 @@ void Simulation::printInitialStatus() {
     logger.logLine("  Number of chargers: " + std::to_string(numChargers));
     logger.logLine("  Time step: " + std::to_string(simTimeStepSeconds) + " seconds (" +
                                      std::to_string(simTimeStepSeconds / 3600.0) + " hours)");
+    logger.logLine("  Log verbosity level: " + std::to_string(simLogVerbosity));
+    logger.logLine("  Vehicle selection: " + std::string(randomizeVehicles ? "Random" : "Equal distribution"));
+    logger.logLine();
 
     logger.logLine("Initial Status:");
     logger.logLine("  Time: " + std::to_string(currentTime));
@@ -299,7 +322,7 @@ void Simulation::printStatsTable() {
     logger.log(logger.formatFixedWidth("Time (hrs)",         colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("(miles)",            colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("Time (hrs)",         colWidth) + " | ", false);
-    logger.log(logger.formatFixedWidth("(Count %)",          colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("(Fault/hr)",         colWidth) + " | ", false);
     logger.logLine(logger.formatFixedWidth("(miles)",        colWidth) + " | ", false);
 
     logger.logLine(separator);
@@ -308,17 +331,9 @@ void Simulation::printStatsTable() {
     for (const auto& pair : typeStats) {
         const auto& stats = pair.second;
 
-        // Format fault count and rate as "Count (Rate%)"
-        double faultRatePercent = stats.getFaultRate() * 100.0;
-        std::string faultRateStr = std::to_string(faultRatePercent);
 
-        // Trim to 1 decimal place for cleaner display
-        size_t dotPos = faultRateStr.find('.');
-        if (dotPos != std::string::npos && dotPos + 2 < faultRateStr.length()) {
-            faultRateStr = faultRateStr.substr(0, dotPos + 2);
-        }
-
-        std::string faultDisplay = std::to_string(stats.totalFaults) + " (" + faultRateStr + "%)";
+        std::string faultRateStr = std::to_string(stats.getFaultRate());
+        std::string faultDisplay = std::to_string(stats.totalFaults) + " (" + faultRateStr + ")";
 
         logger.log(logger.formatFixedWidth(stats.manufacturerName,                           colWidth) +  " | ");
         logger.log(logger.formatFixedWidth(std::to_string(stats.vehicleCount),               colWidth) +  " | ", false);
@@ -347,44 +362,82 @@ void Simulation::printFinalStatus() {
 }
 
 void Simulation::printChargingQueue() {
-    logger.log("Charging Queue: [");
+    logger.log(2, "Charging Queue: [");
 
     std::queue<Vehicle*> tempQueue = chargingQueue;
     bool first = true;
 
     while (!tempQueue.empty()) {
         if (!first) {
-            logger.log(", ", false);
+            logger.log(2, ", ", false);
         }
         Vehicle* vehicle = tempQueue.front();
         tempQueue.pop();
-        logger.log("Vehicle " + std::to_string(vehicle->getId()), false);
+        logger.log(2, "Vehicle " + std::to_string(vehicle->getId()), false);
         first = false;
     }
 
-    logger.logLine("]", false);
+    logger.logLine(2, "]", false);
 }
 
 void Simulation::printChargingStations() {
-    logger.log("Charging Stations: ");
+    logger.log(2, "Charging Stations: ");
 
     for (int i = 0; i < numChargers; i++) {
-        std::string stationLabel = "S" + std::to_string(i) + ":";
 
         if (chargingStations[i] == nullptr) {
-            logger.log(stationLabel + "[--]", false);
+            logger.log(2, "[--]", false);
         } else {
-            logger.log(stationLabel + "[Vehicle " + std::to_string(chargingStations[i]->getId()) + "]", false);
+            logger.log(2, "[Vehicle " + std::to_string(chargingStations[i]->getId()) + "]", false);
         }
 
         if (i < numChargers - 1) {
-            logger.log(" ", false);
+            logger.log(2, " ", false);
         }
     }
 
-    logger.logLine("", false);
+    logger.logLine(2, "", false);
 }
 
-double Simulation::nextTimeStep() const {
-    return std::min(simTimeStepSeconds * SECONDS_TO_HOURS, simHours - currentTime);
+void Simulation::printFaultStatsTable() {
+    logger.logLine();
+    logger.logSectionDivider("Fault Statistics by Vehicle Type", true);
+
+    // Table header
+    const int colWidth = 15;
+    std::string separator(17 + 6*colWidth, '-');
+    logger.logLine();
+    logger.logLine(separator);
+    logger.log(logger.formatFixedWidth("Vehicle Type", colWidth) + " | ");
+    logger.log(logger.formatFixedWidth("Count", colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Total Faults", colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Flight Hours", colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Expected Fault", colWidth) + " | ", false);
+    logger.logLine(logger.formatFixedWidth("Actual Fault", colWidth) + " | ", false);
+
+    logger.log(logger.formatFixedWidth("", colWidth) + " | ");
+    logger.log(logger.formatFixedWidth("", colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("", colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("", colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Rate Per Hour", colWidth) + " | ", false);
+    logger.logLine(logger.formatFixedWidth("Rate Per Hour", colWidth) + " | ", false);
+
+    logger.logLine(separator);
+
+    // Per-Type fault data
+    for (const auto& pair : typeStats) {
+        const auto& stats = pair.second;
+
+        // Calculate actual fault rate per hour
+        double actualFaultRate = (stats.totalFlightTime > 0) ?
+                                (static_cast<double>(stats.totalFaults) / stats.totalFlightTime) : 0.0;
+
+        logger.log(logger.formatFixedWidth(stats.manufacturerName, colWidth) + " | ");
+        logger.log(logger.formatFixedWidth(std::to_string(stats.vehicleCount), colWidth) + " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.totalFaults), colWidth) + " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.totalFlightTime), colWidth) + " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.expectedFaultRate), colWidth) + " | ", false);
+        logger.logLine(logger.formatFixedWidth(std::to_string(actualFaultRate), colWidth) + " | ", false);
+    }
+    logger.logLine(separator);
 }

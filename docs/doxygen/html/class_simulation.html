@@ -96,7 +96,7 @@ $(function(){initNavTree('class_simulation.html','','class_simulation-members');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 id="header-pub-methods" class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ae5d3833948952842b8f6732f17212137" id="r_ae5d3833948952842b8f6732f17212137"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5d3833948952842b8f6732f17212137">Simulation</a> (int numVehicles=<a class="el" href="simulation_8hpp.html#a25cdeaace8fa5ff62b6162e0992c3ee3">DEFAULT_NUM_VEHICLES</a>, double simHours=<a class="el" href="simulation_8hpp.html#aa15a6015131b72ee5c0463dbf192bf44">DEFAULT_HRS_SIM</a>, int numChargers=<a class="el" href="simulation_8hpp.html#a49283b2ada986643753e5fba58fd11fa">DEFAULT_CHARGERS</a>, double simTimeStepSeconds=<a class="el" href="simulation_8hpp.html#a5fd01d06dc83aaf08aa53b94d0ccd7d0">DEFAULT_TIME_STEP_SECONDS</a>)</td></tr>
+<tr class="memitem:ad0f967bbb7eb94710ebcebf787da7744" id="r_ad0f967bbb7eb94710ebcebf787da7744"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad0f967bbb7eb94710ebcebf787da7744">Simulation</a> (int numVehicles=<a class="el" href="simulation_8hpp.html#a25cdeaace8fa5ff62b6162e0992c3ee3">DEFAULT_NUM_VEHICLES</a>, double simHours=<a class="el" href="simulation_8hpp.html#aa15a6015131b72ee5c0463dbf192bf44">DEFAULT_HRS_SIM</a>, int numChargers=<a class="el" href="simulation_8hpp.html#a49283b2ada986643753e5fba58fd11fa">DEFAULT_CHARGERS</a>, double simTimeStepSeconds=<a class="el" href="simulation_8hpp.html#a5fd01d06dc83aaf08aa53b94d0ccd7d0">DEFAULT_TIME_STEP_SECONDS</a>, int simLogVerbosity=<a class="el" href="simulation_8hpp.html#af269028b5da95473cbcc9c861c266db2">DEFAULT_VERBOSITY</a>, bool randomizeVehicles=true)</td></tr>
 <tr class="memitem:aabcfa929f9e6622346ece569f0229a91" id="r_aabcfa929f9e6622346ece569f0229a91"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aabcfa929f9e6622346ece569f0229a91">~Simulation</a> ()=default</td></tr>
 <tr class="memitem:a274686ba8eec7024ad63b57e9b3f1e4f" id="r_a274686ba8eec7024ad63b57e9b3f1e4f"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a274686ba8eec7024ad63b57e9b3f1e4f">runSimulation</a> ()</td></tr>
 <tr class="memitem:acd0aa130ef41dd4e615f7a5d8c42c45a" id="r_acd0aa130ef41dd4e615f7a5d8c42c45a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acd0aa130ef41dd4e615f7a5d8c42c45a">FRIEND_TEST</a> (<a class="el" href="#a99a505f087102062f0fe093bce00b397">SimulationTest</a>, Initialization)</td></tr>
@@ -109,8 +109,8 @@ Friends</h2></td></tr>
 <tr class="memitem:a99a505f087102062f0fe093bce00b397" id="r_a99a505f087102062f0fe093bce00b397"><td class="memItemLeft" align="right" valign="top">class&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a99a505f087102062f0fe093bce00b397">SimulationTest</a></td></tr>
 </table>
 <a name="doc-constructors" id="doc-constructors"></a><h2 id="header-doc-constructors" class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="ae5d3833948952842b8f6732f17212137" name="ae5d3833948952842b8f6732f17212137"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae5d3833948952842b8f6732f17212137">&#9670;&#160;</a></span>Simulation()</h2>
+<a id="ad0f967bbb7eb94710ebcebf787da7744" name="ad0f967bbb7eb94710ebcebf787da7744"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad0f967bbb7eb94710ebcebf787da7744">&#9670;&#160;</a></span>Simulation()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -133,7 +133,17 @@ Friends</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>simTimeStepSeconds</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="simulation_8hpp.html#a5fd01d06dc83aaf08aa53b94d0ccd7d0">DEFAULT_TIME_STEP_SECONDS</a></span>&#160;)</td>
+          <td class="paramtype">double</td>          <td class="paramname"><span class="paramname"><em>simTimeStepSeconds</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="simulation_8hpp.html#a5fd01d06dc83aaf08aa53b94d0ccd7d0">DEFAULT_TIME_STEP_SECONDS</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>simLogVerbosity</em></span><span class="paramdefsep"> = </span><span class="paramdefval"><a class="el" href="simulation_8hpp.html#af269028b5da95473cbcc9c861c266db2">DEFAULT_VERBOSITY</a></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>randomizeVehicles</em></span><span class="paramdefsep"> = </span><span class="paramdefval">true</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">

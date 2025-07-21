@@ -6,6 +6,7 @@ var struct_vehicle_type_stats =
     [ "getFaultRate", "struct_vehicle_type_stats.html#a34a6d3b5a91a1d1e2ae07b6787d7887d", null ],
     [ "reset", "struct_vehicle_type_stats.html#ac8fd6ab6c5761c9b135fc3b859d34cff", null ],
     [ "toString", "struct_vehicle_type_stats.html#a1a5e2b0bde6436d8cb8c76b3f46e5bf1", null ],
+    [ "expectedFaultRate", "struct_vehicle_type_stats.html#a2f2514617f6865fd93fb9c287f42826d", null ],
     [ "manufacturer", "struct_vehicle_type_stats.html#a1995e4de92ea5ee85520c0d239bd48af", null ],
     [ "manufacturerName", "struct_vehicle_type_stats.html#a824797fd00477323cd5dc6b188679183", null ],
     [ "totalCharges", "struct_vehicle_type_stats.html#a12032cc9478d8a3b3feedeb40a9bedca", null ],

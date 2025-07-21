@@ -28,19 +28,26 @@ private:
     std::string logFileName;
     LogMode currentMode;
     bool includeTimestampInFile;
+    int verbosityLevel;
 
     void openLogFile();
 
 public:
-    Logger(const std::string& filename = "", LogMode mode = LogMode::BOTH);
+    Logger(const std::string& filename = "", LogMode mode = LogMode::BOTH, int verbosity = 1);
     ~Logger();
 
     void log(const std::string& message, bool includeTimestamp = true);
     void logLine(const std::string& message = "", bool includeTimestamp = true);
 
 
+    void log(int verbosity, const std::string& message, bool includeTimestamp = true);
+    void logLine(int verbosity, const std::string& message = "", bool includeTimestamp = true);
+
     void logSectionDivider(const std::string& message = "", bool includeTimestamp = true);
     void logSubSectionDivider(const std::string& message = "", bool includeTimestamp = true);
+
+    void logSectionDivider(int verbosity, const std::string& message = "", bool includeTimestamp = true);
+    void logSubSectionDivider(int verbosity, const std::string& message = "", bool includeTimestamp = true);
 
     std::string formatFixedWidth(const std::string& text, int width, bool rightAlign = true);
 
@@ -52,6 +59,9 @@ public:
 
     void setIncludeTimestampInFile(bool enable);
     bool getIncludeTimestampInFile() const;
+
+    void setVerbosityLevel(int level);
+    int getVerbosityLevel() const;
 
     static std::string getCurrentTimestamp() {
         auto now = std::chrono::system_clock::now();

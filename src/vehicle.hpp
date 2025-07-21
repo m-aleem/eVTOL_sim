@@ -136,19 +136,6 @@ struct VehicleStats {
         }
 
         return result;
-
-        // // Show all values for totals with aligned labels (10 chars each)
-        // char buffer[300];
-        // snprintf(buffer, sizeof(buffer),
-        //          "Flew      %.3fh  Distance  %.3fmi  Charged   %.3fh  Queued    %.3fh  Faulted   %.3fh  Faults    %d  PAX Miles :%2fmi",
-        //          flightTime,                             // Flight hours
-        //          distanceTraveled,                       // Distance miles
-        //          chargingTime,                           // Charging hours
-        //          queuedTime,                             // Queue hours
-        //          faultedTime,                            // Faulted hours
-        //          faults,                                 // Fault count
-        //          passengerMiles);      // Passenger miles
-        // return std::string(buffer);
     }
 };
 

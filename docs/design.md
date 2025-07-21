@@ -80,38 +80,26 @@ The simulation operates on a discrete time-stepping model where each iteration r
 
 The simulation follows this sequence during each discrete time step:
 
-1. **Update All Vehicles** - Each vehicle processes its state transitions based on available time slice
-2. **Manage Charging Queue** - Add vehicles needing charge to queue and assign available charging stations
-3. **Process Charging Vehicles** - Update vehicles currently charging and free stations when charging completes
-4. **Advance Time** - Increment simulation clock and collect statistics
+1. **Process Charging Vehicles**: Free up chargers from vehicles that have completed charging
+2. **Update All Vehicles**: Each vehicle processes its automatic state transitions based on available time slice
+3. **Manage Charging Queue**: Add vehicles needing charge to queue and assign newly available charging stations
+4. **Advance Time**: Increment simulation clock
 
-
-Throughout this duration, it will also log details to cosole and the simulation report.
+Throughout this duration, it will also collect statistics and log details to console and the simulation report.
 
 The following is a simple flow diagram of the Simulation:
 
-
 ```
-START
-  ↓
-Update All Vehicles  →  Manage Charging &   →  Update Time
-                        Process Charging        Progression
-
-┌─────────────┐        ┌─────────────────┐    ┌─────────────┐
-│ All vehicles│        │ Queue vehicles  │    │ Advance     │
-│ update based│        │ needing charge  │    │ simulation  │
-│ on current  │        │                 │    │ clock       │
-│ conditions  │        │ Assign available│    │             │
-│ and time    │        │ charging slots  │    │ Collect     │
-│ slice       │        │                 │    │ statistics  │
-│             │        │ Process active  │    │             │
-│             │        │ charging        │    │             │
-└─────────────┘        └─────────────────┘    └─────────────┘
-       ↑                                               ↓
-       │                                      Time < Duration?
-       │                                               │
-       │                                               │
-       └------------------------------------- Yes -----┴--- No → DONE
+      START
+        ↓
+Process Charging → Update All Vehicles → Manage Charging
+    Vehicles                                  Queue
+        |                                       ↓
+        |                                  Advance Time
+        |                                       ↓
+        |                                Time < Duration?
+        |                                       |
+        └-------------------------------Yes-----┴---------- No → DONE
 ```
 
 

@@ -28,5 +28,6 @@ var searchData=
   ['gettotalflighttime_25',['getTotalFlightTime',['../class_vehicle.html#ac27d79564b4b539e7573dd868b41a4ec',1,'Vehicle']]],
   ['gettotalpassengermiles_26',['getTotalPassengerMiles',['../class_vehicle.html#a040faffd93c471a6c272f3075b03eb0b',1,'Vehicle']]],
   ['gettotalqueuedtime_27',['getTotalQueuedTime',['../class_vehicle.html#ad13d286be58195645c8718f9b9339c0a',1,'Vehicle']]],
-  ['gettotalstats_28',['getTotalStats',['../class_vehicle.html#aa2bc6f15edb6198a5a1902d2107b3d80',1,'Vehicle::getTotalStats() const'],['../class_vehicle.html#ac41bbcaa3fe91d3daccdd48edc25e7b2',1,'Vehicle::getTotalStats()']]]
+  ['gettotalstats_28',['getTotalStats',['../class_vehicle.html#aa2bc6f15edb6198a5a1902d2107b3d80',1,'Vehicle::getTotalStats() const'],['../class_vehicle.html#ac41bbcaa3fe91d3daccdd48edc25e7b2',1,'Vehicle::getTotalStats()']]],
+  ['getverbositylevel_29',['getVerbosityLevel',['../class_logger.html#afd54fee21b63bfd03ed28662a1130d37',1,'Logger']]]
 ];

@@ -26,6 +26,7 @@ const int DEFAULT_HRS_SIM = 3; // Default hours for simulation
 const int DEFAULT_CHARGERS = 3; // Default number of charging stations
 const double DEFAULT_TIME_STEP_SECONDS = 1; //  Default time step in seconds
 const double SECONDS_TO_HOURS = 1/3600.0; // Conversion factor from seconds to hours
+const int DEFAULT_VERBOSITY = 1; // Default verbosity level for logging
 
 const int NUM_VEHICLE_TYPES = static_cast<int>(Vehicle::Manufacturer::NumManufacturers); // Number of different vehicle types
 
@@ -41,9 +42,10 @@ struct VehicleTypeStats {
     double totalChargingTime = 0.0;
     int totalFaults = 0;
     double totalPassengerMiles = 0.0;
+    double expectedFaultRate = 0.0; // Expected fault rate per hour
 
     double getFaultRate() const {
-        return totalFaults > 0 ? static_cast<double>(totalFaults) / vehicleCount : 0.0;
+        return totalFaults > 0 ? (static_cast<double>(totalFaults) / vehicleCount) / (totalFlightTime) : 0.0;
     }
 
     double avgFlightTimePerFlight() const {
@@ -89,7 +91,9 @@ public:
         int numVehicles = DEFAULT_NUM_VEHICLES,
         double simHours = DEFAULT_HRS_SIM,
         int numChargers = DEFAULT_CHARGERS,
-        double simTimeStepSeconds = DEFAULT_TIME_STEP_SECONDS);
+        double simTimeStepSeconds = DEFAULT_TIME_STEP_SECONDS,
+        int simLogVerbosity = DEFAULT_VERBOSITY,
+        bool randomizeVehicles = true);
 
     ~Simulation() = default;
 
@@ -108,6 +112,8 @@ private:
     double simHours;
     int numChargers;
     double simTimeStepSeconds;
+    int simLogVerbosity;
+    bool randomizeVehicles;
     StdRandomGenerator rng;
 
     double currentTime;
@@ -132,7 +138,7 @@ private:
     void updateVehicleStats(Vehicle* vehicle);
     void manageCharging();
     void assignAvailableChargers();
-    void processChargingVehicles(double timeStep);
+    void processChargingVehicles();
     void updateAllVehicles(double timeStep);
     double nextTimeStep() const;
 
@@ -144,6 +150,8 @@ private:
     void printChargingStations();
     void printFinalStatus();
     void printStatsTable();
+    void printVehicleStats(const Vehicle* vehicle, const VehicleStats& stepStats, const VehicleStats& totalStat);
+    void printFaultStatsTable();
 
 };
 
