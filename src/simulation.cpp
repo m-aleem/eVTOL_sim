@@ -322,7 +322,7 @@ void Simulation::printStatsTable() {
     logger.log(logger.formatFixedWidth("Time (hrs)",         colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("(miles)",            colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("Time (hrs)",         colWidth) + " | ", false);
-    logger.log(logger.formatFixedWidth("(Fault/hr)",         colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("",                   colWidth) + " | ", false);
     logger.logLine(logger.formatFixedWidth("(miles)",        colWidth) + " | ", false);
 
     logger.logLine(separator);
@@ -331,16 +331,12 @@ void Simulation::printStatsTable() {
     for (const auto& pair : typeStats) {
         const auto& stats = pair.second;
 
-
-        std::string faultRateStr = std::to_string(stats.getFaultRate());
-        std::string faultDisplay = std::to_string(stats.totalFaults) + " (" + faultRateStr + ")";
-
         logger.log(logger.formatFixedWidth(stats.manufacturerName,                           colWidth) +  " | ");
         logger.log(logger.formatFixedWidth(std::to_string(stats.vehicleCount),               colWidth) +  " | ", false);
         logger.log(logger.formatFixedWidth(std::to_string(stats.avgFlightTimePerFlight()),   colWidth) +  " | ", false);
         logger.log(logger.formatFixedWidth(std::to_string(stats.avgDistancePerFlight()),     colWidth) +  " | ", false);
         logger.log(logger.formatFixedWidth(std::to_string(stats.avgChargingTimePerSession()),colWidth) +  " | ", false);
-        logger.log(logger.formatFixedWidth(faultDisplay,                                     colWidth) +  " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.totalFaults),                colWidth) +  " | ", false);
         logger.logLine(logger.formatFixedWidth(std::to_string(stats.totalPassengerMiles),    colWidth) +  " | ", false);
     }
     logger.logLine(separator);
@@ -404,23 +400,24 @@ void Simulation::printFaultStatsTable() {
     logger.logSectionDivider("Fault Statistics by Vehicle Type", true);
 
     // Table header
-    const int colWidth = 15;
-    std::string separator(17 + 6*colWidth, '-');
+    const int colWidth = 12;
+    const int colWidthLarger = 15;
+    std::string separator(23 + 6*colWidth, '-');
     logger.logLine();
     logger.logLine(separator);
-    logger.log(logger.formatFixedWidth("Vehicle Type", colWidth) + " | ");
+    logger.log(logger.formatFixedWidth("Vehicle", colWidth) + " | ");
     logger.log(logger.formatFixedWidth("Count", colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("Total Faults", colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("Flight Hours", colWidth) + " | ", false);
-    logger.log(logger.formatFixedWidth("Expected Fault", colWidth) + " | ", false);
-    logger.logLine(logger.formatFixedWidth("Actual Fault", colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Fault Prb", colWidthLarger) + " | ", false);
+    logger.logLine(logger.formatFixedWidth("Actual Fault", colWidthLarger) + " | ", false);
 
-    logger.log(logger.formatFixedWidth("", colWidth) + " | ");
+    logger.log(logger.formatFixedWidth("Type", colWidth) + " | ");
     logger.log(logger.formatFixedWidth("", colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("", colWidth) + " | ", false);
     logger.log(logger.formatFixedWidth("", colWidth) + " | ", false);
-    logger.log(logger.formatFixedWidth("Rate Per Hour", colWidth) + " | ", false);
-    logger.logLine(logger.formatFixedWidth("Rate Per Hour", colWidth) + " | ", false);
+    logger.log(logger.formatFixedWidth("Per Hour", colWidthLarger) + " | ", false);
+    logger.logLine(logger.formatFixedWidth("Rate Per Hour", colWidthLarger) + " | ", false);
 
     logger.logLine(separator);
 
@@ -428,16 +425,12 @@ void Simulation::printFaultStatsTable() {
     for (const auto& pair : typeStats) {
         const auto& stats = pair.second;
 
-        // Calculate actual fault rate per hour
-        double actualFaultRate = (stats.totalFlightTime > 0) ?
-                                (static_cast<double>(stats.totalFaults) / stats.totalFlightTime) : 0.0;
-
         logger.log(logger.formatFixedWidth(stats.manufacturerName, colWidth) + " | ");
         logger.log(logger.formatFixedWidth(std::to_string(stats.vehicleCount), colWidth) + " | ", false);
         logger.log(logger.formatFixedWidth(std::to_string(stats.totalFaults), colWidth) + " | ", false);
         logger.log(logger.formatFixedWidth(std::to_string(stats.totalFlightTime), colWidth) + " | ", false);
-        logger.log(logger.formatFixedWidth(std::to_string(stats.expectedFaultRate), colWidth) + " | ", false);
-        logger.logLine(logger.formatFixedWidth(std::to_string(actualFaultRate), colWidth) + " | ", false);
+        logger.log(logger.formatFixedWidth(std::to_string(stats.expectedFaultRate), colWidthLarger) + " | ", false);
+        logger.logLine(logger.formatFixedWidth(std::to_string(stats.getActualFaultRate()), colWidthLarger) + " | ", false);
     }
     logger.logLine(separator);
 }

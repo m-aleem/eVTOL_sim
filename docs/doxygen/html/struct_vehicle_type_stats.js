@@ -3,7 +3,7 @@ var struct_vehicle_type_stats =
     [ "avgChargingTimePerSession", "struct_vehicle_type_stats.html#a2108d0180c1e2566bb4dde79d2f7821e", null ],
     [ "avgDistancePerFlight", "struct_vehicle_type_stats.html#aff54ce74506a3765af6e650f2b8d9491", null ],
     [ "avgFlightTimePerFlight", "struct_vehicle_type_stats.html#ac0642f8120f88e4515030930bca7f020", null ],
-    [ "getFaultRate", "struct_vehicle_type_stats.html#a34a6d3b5a91a1d1e2ae07b6787d7887d", null ],
+    [ "getActualFaultRate", "struct_vehicle_type_stats.html#aa0c1c7f86b5cde7986451d4d3dd97e57", null ],
     [ "reset", "struct_vehicle_type_stats.html#ac8fd6ab6c5761c9b135fc3b859d34cff", null ],
     [ "toString", "struct_vehicle_type_stats.html#a1a5e2b0bde6436d8cb8c76b3f46e5bf1", null ],
     [ "expectedFaultRate", "struct_vehicle_type_stats.html#a2f2514617f6865fd93fb9c287f42826d", null ],

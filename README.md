@@ -81,14 +81,16 @@ The output of the program is a simulation report which includes various statisti
 The following are various suggested paths for future work associated with this simulation both in terms of improving the current state of the project (there is always more to test...) and further extension of capabilities/fidelity of the simulation.
 
 ### Vehicle
-* Add support for 'flight paths' and route planning between destinations
 * Add more realistic state transition support such as takeoff/landing phases
 * Model emergency landing (after fault) and recovery procedures
+* Add support for 'flight paths' and route planning between destinations
 
 ### Simulation
-* Add real-time visualization of vehicle positions and state (through a GUI, which could also support not having to run this over command-line and we can see each step as it progresses and not just in the post-simulation report)
+* Clean up Simulation implementation, including cleaner separation of logging from time stepping flow
+* Add a GUI
+    * Real-time visualization of vehicle state
+    * Implement simulation state pause/resume/saving
 * Add support for multiple simulation runs with statistical analysis
-* Implement simulation state pause/resume/saving
 * Implement multi-threaded simulation for performance improvements
 * Add configuration file support for simulation parameters and also for manufacturer information import
 * Implement data export to various formats (CSV, JSON, database)

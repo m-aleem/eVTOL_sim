@@ -44,8 +44,8 @@ struct VehicleTypeStats {
     double totalPassengerMiles = 0.0;
     double expectedFaultRate = 0.0; // Expected fault rate per hour
 
-    double getFaultRate() const {
-        return totalFaults > 0 ? (static_cast<double>(totalFaults) / vehicleCount) / (totalFlightTime) : 0.0;
+    double getActualFaultRate() const {
+        return (totalFlightTime > 0) ? (static_cast<double>(totalFaults) / totalFlightTime) : 0.0;
     }
 
     double avgFlightTimePerFlight() const {
