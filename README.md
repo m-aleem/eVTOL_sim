@@ -72,7 +72,7 @@ Currently there are no required inputs, however if desired various simulation pr
 ```
 
 ### Output
-The output of the program is a simulation report which includes various statistics per vehicle type. This output is shown both on the console and saved to a timestamped log file in the `output/` directory. Console output provides high-level progress and final results, while the log file contains detailed step-by-step information including individual vehicle states, charging queue status, and charging station assignments.
+The output of the program is a simulation report which includes various statistics per vehicle type. This output is shown both on the console and saved to a timestamped log file in the `output/` directory. Console output provides high-level progress and final results, while the log file, if verbosity is high enough, will also contain detailed step-by-step information including individual vehicle states, charging queue status, and charging station assignments.
 
 ## Future Work
 
