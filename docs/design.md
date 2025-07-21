@@ -66,7 +66,7 @@ A vehicle can enter the Faulted state based on its manufacturer-defined fault pr
 
 
 #### Statistics
-For each vehicle object, statistics are collected in a member structure `stats`. Again, this allows for easy addition of new/additional metrics.
+For each vehicle object, statistics are collected in a member structures `stepStats` and `totalStats` of type `VehicleStats`. Again, this allows for easy addition of new/additional metrics.
 
 TODO: Time permitting I would write more details about the Vehicle class here, probably create an actual state transition diagram, and also discuss about how to extend it in future (and also do those code updates!).
 
