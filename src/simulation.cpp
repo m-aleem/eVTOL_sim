@@ -51,9 +51,9 @@ bool Simulation::runSimulation() {
         logger.logSubSectionDivider(2, "Simulation Step " + std::to_string(stepCount + 1));
         logger.logLine(2, "Current Time: " + std::to_string(currentTime) + " hours (Delta +" + std::to_string(timeStep) + " hours from previous step)");
 
+        processChargingVehicles();
         updateAllVehicles(timeStep);
         manageCharging();
-        processChargingVehicles();
 
         currentTime += timeStep;
         stepCount++;
