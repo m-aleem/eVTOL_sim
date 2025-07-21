@@ -39,8 +39,6 @@ To build this simulation project:
 1) Clone project.
 2) Run `make`.
 
-By default this will build the project into the `build` directory.
-
 ### Run
 
 #### Simulation
