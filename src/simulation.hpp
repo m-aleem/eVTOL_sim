@@ -100,7 +100,6 @@ public:
     bool runSimulation(); // Main simulation loop
 
     // Allow access to private members for testing
-    friend class SimulationTest;
     FRIEND_TEST(SimulationTest, Initialization);
     FRIEND_TEST(SimulationTest, CreateVehicles);
     FRIEND_TEST(SimulationTest, TimeStep);

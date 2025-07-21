@@ -6,25 +6,7 @@
 #include <filesystem>
 #include <fstream>
 
-class SimulationTest : public ::testing::Test {
-protected:
-    void SetUp() override {
-        // Clean up any existing output files before tests
-        if (std::filesystem::exists("output")) {
-            std::filesystem::remove_all("output");
-        }
-    }
-
-    void TearDown() override {
-        // Clean up after tests
-        if (std::filesystem::exists("output")) {
-            std::filesystem::remove_all("output");
-        }
-    }
-};
-
-
-TEST_F(SimulationTest, Initialization) {
+TEST(SimulationTest, Initialization) {
     SCOPED_TRACE("REQ-SIM-001, REQ-SIM-002, REQ-SIM-003, REQ-SIM-004: Verifies constructor arg to parameter assignment.");
 
     // Test default parameters
@@ -51,7 +33,7 @@ TEST_F(SimulationTest, Initialization) {
     }
 }
 
-TEST_F(SimulationTest, CreateVehicles) {
+TEST(SimulationTest, CreateVehicles) {
     SCOPED_TRACE("REQ-SIM-005: Verifies create vehicles method supports all manufacturers.");
 
     Simulation sim(1, 1.0, 1, 1.0);
@@ -69,7 +51,7 @@ TEST_F(SimulationTest, CreateVehicles) {
     }
 }
 
-TEST_F(SimulationTest, TimeStep) {
+TEST(SimulationTest, TimeStep) {
     SCOPED_TRACE("REQ-SIM-006: Verifies discrete time-stepping using nextTimeStep helper method.");
 
     // Test time step conversion and boundary conditions
@@ -113,7 +95,7 @@ TEST_F(SimulationTest, TimeStep) {
     EXPECT_DOUBLE_EQ(3600.0 * SECONDS_TO_HOURS, 1.0); // 1 hour conversion
 }
 
-TEST_F(SimulationTest, ChargingQueue) {
+TEST(SimulationTest, ChargingQueue) {
     SCOPED_TRACE("REQ-SIM-007:Verifies charging queue");
 
     Simulation sim(3, 1.0, 1, 1.0); // 3 vehicles, 1 charger to force queuing
